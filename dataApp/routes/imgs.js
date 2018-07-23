@@ -8,6 +8,7 @@ const {
 const { addImg } = require("../service/imgsService")
 
 router.post('/upload', async function (req, res, next) {
+	const {type}=req.query
 	// 上传文件事件
 	const { success, data } = await uploadFile(req, res, {
 		//目录
@@ -16,7 +17,7 @@ router.post('/upload', async function (req, res, next) {
 		path: "./public/images/",
 	})
 	console.log(data)
-	res.send(await addImg(data))
+	res.send(await addImg({...data,type}))
 
 });
 
