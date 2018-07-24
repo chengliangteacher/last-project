@@ -14,10 +14,16 @@ export default {
         },
         deleteshops(state){
             return state.data
+        },
+        changeSize(state,value){
+            state.data.count=value
+        },
+        changePage(state,value){
+            state.data.curPage=value
         }
     },
     actions: {
-        async initshopdata(context,usersId='5b52fc32c1327356b8daafcd') {
+        async initshopdata(context,usersId=localStorage.usersId) {
             let data = await fetch("/shops/getshops", {
                 method: "post",
                 headers: {
@@ -29,10 +35,9 @@ export default {
                     usersId,
                 })
             }).then(res => res.json());
-            console.log(data)
             context.commit('initshops', data)
         },
-        async deleteshops(context, arr,cb=()=>{}) {
+        async deleteshops(context, arr) {
             await fetch("/shops/deleteshops", {
                 method: "post",
                 headers: {
@@ -42,7 +47,7 @@ export default {
                     _id:arr
                 })
             }).then(res =>{
-                cb()
+                res.json()
             });
             context.commit('deleteshops')
         }
