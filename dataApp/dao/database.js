@@ -1,4 +1,9 @@
 var mongoose = require('mongoose');
+
+mongoose.Promise=require("bluebird")
+require("./model/orders.js")
+var dbURI = 'mongodb://localhost/dingdan';
+
 // require("./model/movie.js")
 require('./model/imgs')
 require('./model/shops')
