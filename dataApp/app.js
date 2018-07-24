@@ -6,6 +6,7 @@ var logger = require('morgan');
 require('./dao/database.js')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var orderWrapRouter =require("./routes/orderWrap")
 
 var app = express();
 
@@ -21,6 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/users', orderWrapRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
