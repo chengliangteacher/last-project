@@ -17,6 +17,7 @@ import GoodsWrap_P from './components/goodsManage_P/goodsWrap'
 import MerchantsWrap_P from './components/merchantsManage_P/merchantsWrap'
 import MessageWrap_P from './components/message_P/messageWrap'
 import PetOwnersWrap_P from './components/petOwners_P/petOwnersWrap'
+import PetOwnersAdd_P from "./components/petOwners_P/petOwnersAdd"
 
 Vue.use(Router)
 
@@ -78,6 +79,9 @@ export default new Router({
       }, {
         path: 'petOwnersWrap_P',
         component: PetOwnersWrap_P,
+      },{
+        path: 'petOwnersAdd_P',
+        component: PetOwnersAdd_P,
       }]
     }
   ]
