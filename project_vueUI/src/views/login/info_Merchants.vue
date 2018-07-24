@@ -45,7 +45,7 @@ export default {
         return{
             time:new Date().toLocaleString(),
         }
-    }
+    },
 }
 </script>
 
