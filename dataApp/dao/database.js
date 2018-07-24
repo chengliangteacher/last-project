@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
-// require("./model/movie.js")
-var dbURI = 'mongodb://localhost/second';
+mongoose.Promise=require("bluebird")
+require("./model/orders.js")
+var dbURI = 'mongodb://localhost/dingdan';
 
 mongoose.connect(dbURI);
 
