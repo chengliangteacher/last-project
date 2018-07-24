@@ -6,8 +6,14 @@ var logger = require('morgan');
 require('./dao/database.js')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+<<<<<<< HEAD
 var membersRouter=require("./routes/members")
 
+=======
+var orderWrapRouter =require("./routes/orderWrap")
+var shopsRouter=require('./routes/shops')
+var imgsRouter=require('./routes/imgs')
+>>>>>>> c530c09d2ee5338e84d4fac942bf16d24d2e6860
 var app = express();
 
 // view engine setup
@@ -22,7 +28,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+<<<<<<< HEAD
 app.use('/members', membersRouter);
+=======
+app.use('/users', orderWrapRouter);
+
+app.use('/shops', shopsRouter);
+app.use('/imgs', imgsRouter);
+>>>>>>> c530c09d2ee5338e84d4fac942bf16d24d2e6860
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

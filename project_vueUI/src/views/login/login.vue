@@ -20,7 +20,7 @@
 export default {
   methods: {
     login() {
-      this.$router.push("/info_Merchants");
+      this.$router.push(`/info_Merchants`);
     },
     reg() {
       this.$router.push("/reg");
