@@ -12,6 +12,9 @@ export default {
         initshops(state, data) {
             Object.assign(state.data, data)
         },
+        initshopsall(state, data) {
+            Object.assign(state.data, data)
+        },
         deleteshops(state){
             return state.data
         },
@@ -37,6 +40,21 @@ export default {
             }).then(res => res.json());
             context.commit('initshops', data)
         },
+
+        async initshopdataall(context) {
+            let data = await fetch("/shops/getshopsall", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    curPage: context.state.data.curPage,
+                    count: context.state.data.count,
+                })
+            }).then(res => res.json());
+            context.commit('initshopsall', data)
+        },
+
         async deleteshops(context, arr) {
             await fetch("/shops/deleteshops", {
                 method: "post",

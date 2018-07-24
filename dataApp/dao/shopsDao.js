@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 var fs=require('fs')
 
-//查询
+//查询(门店管理员查询，设计条件查询)
 module.exports.getshops = async ({
     curPage,
     count,
@@ -9,6 +9,30 @@ module.exports.getshops = async ({
 }) => {
     const shopsmodel = mongoose.model("shops")
     const shop = await shopsmodel.find({usersId:usersId})
+        .populate([{
+                path: 'shopLicenceImg'
+            },
+            {
+                path: 'shopImg'
+            }
+        ])
+        .skip((curPage-1)*count)
+        .limit(count)
+    const total = await shopsmodel.find().count()
+    return {
+        shop,
+        total,
+    }
+}
+
+
+//查询（平台管理员查询，即全部查询）
+module.exports.getshopsall = async ({
+    curPage,
+    count
+}) => {
+    const shopsmodel = mongoose.model("shops")
+    const shop = await shopsmodel.find()
         .populate([{
                 path: 'shopLicenceImg'
             },
