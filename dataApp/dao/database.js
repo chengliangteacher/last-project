@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
-// require("./model/movie.js")
-require('./model/imgs')
-require('./model/shops')
+require("./model/goods.js")
+require("./model/imgs.js")
+require("./model/users.js")
+require("./model/services.js")
+
 var dbURI = 'mongodb://localhost/second';
 
 mongoose.connect(dbURI);

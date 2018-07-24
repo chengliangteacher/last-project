@@ -39,6 +39,11 @@ var ServiceSchema = new Schema({
 	servicePrice: {
 		type: Number
 	},
+
+	serviceImg:[{
+		type: Schema.Types.ObjectId,
+		ref: "imgs"
+	}],
 	//用户联系
     usersId: {
 		type: Schema.Types.ObjectId,
