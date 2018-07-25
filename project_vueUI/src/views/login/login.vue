@@ -85,10 +85,7 @@
       height: 400px;
       box-shadow: 20 0 0 15 red;
       margin: 100px auto;
-     
     }
-
-
     body {
       background-image: url("/img/ala1.png");
       background-repeat: no-repeat;

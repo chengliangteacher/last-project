@@ -1,9 +1,8 @@
+<<<<<<< HEAD
+=======
 <template>
     <div>
    <div style="margin-top: 20px">
-    <el-button @click="toggleSelection()">取消选择</el-button>
-    <el-button @click="deleteSelection()">删除</el-button>
-    <el-button @click="modefiySelection()">修改</el-button>
   </div>
         <el-table
             ref="multipleTable"
@@ -36,6 +35,9 @@
             prop="shopLicenceImg"
             label="营业执照图片"
             width="120">
+             <template slot-scope="scope">
+              <img :src="scope.row.shopLicenceImg.url"  style="width:60px" alt="logo">
+            </template>
             </el-table-column>
                <el-table-column
             prop="shopLocation"
@@ -56,6 +58,9 @@
             prop="shopImg"
             label="头图"
             width="120">
+             <template slot-scope="scope">
+              <img :src="scope.row.shopImg.url"  style="width:60px" alt="logo">
+            </template>
             </el-table-column>
             <el-table-column
             prop="shopFeature"
@@ -78,17 +83,8 @@
  
 </template>
 <script>
-import {mapActions,mapState} from 'vuex'
+import {mapActions,mapState,mapMutations} from 'vuex'
 export default {
-  data() {
-    return {
-      multipleSelection: [],
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4
-    };
-  },
   methods: {
     //选择框操作
     toggleSelection(rows) {
@@ -100,25 +96,22 @@ export default {
         this.$refs.multipleTable.clearSelection();
       }
     },
-    deleteSelection(){
-      console.log(this.multipleSelection[0]._id)
-    },
-    modefiySelection(rows){
-      console.log(rows)
-    },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.changeSize(val)
+      this.initshopdataall()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.changePage(val)
+      this.initshopdataall()
     },
-    ...mapActions('shops',['initshopdata'])
+    ...mapActions('shops',['initshopdataall']),
+    ...mapMutations("shops",["changeSize","changePage"]),
   },
   created(){
-      this.initshopdata()
+      this.initshopdataall()
   },
   computed:{
     ...mapState('shops',['data'])
@@ -126,3 +119,4 @@ export default {
 };
 </script>
 
+>>>>>>> da6624c36027a9c2cad0a5662976208c4b84147d

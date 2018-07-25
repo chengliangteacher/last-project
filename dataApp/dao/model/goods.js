@@ -14,6 +14,9 @@ var GoodsSchema = new Schema({
     goodsMaterial: {
         type: String
     },
+    goodsMath: {
+        type: String
+    },
     // 适用规格
     goodsCanFor: {
         type: String
@@ -41,7 +44,7 @@ var GoodsSchema = new Schema({
     },
     // 出厂日期
     goodsDate: {
-        type: String
+        type: Date
     },
     // 保质期
     goodsTime: {
@@ -69,5 +72,9 @@ var GoodsSchema = new Schema({
         ref: 'users'
     },
 });
+
+// GoodsSchema.virtual('goodsDate').get(function() {
+// 	return moment(this.goodsDate).format('YYYY-MM-DD HH:mm');
+// });
 
 mongoose.model("goods", GoodsSchema, "goods");

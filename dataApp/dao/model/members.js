@@ -19,10 +19,11 @@ var MemberSchema = new Schema({
         type: String
     },
     // 头图
-    memberImg:[{
-		type: Schema.Types.ObjectId,
-		ref: "imgs"
-	}],
+    memberImg:{type:String},
+    // [{
+	// 	type: Schema.Types.ObjectId,
+	// 	ref: "imgs"
+	// }],
     // 送货地址
     memberAdd: {
         type: String
@@ -36,10 +37,12 @@ var MemberSchema = new Schema({
         type: String
     },
     // 拥有的宠物
-    pets: [{
-		type: Schema.Types.ObjectId,
-		ref: "pets"
-	}],
+    pets: Array
 });
 
 mongoose.model("members", MemberSchema, "members");
+
+
+
+
+
