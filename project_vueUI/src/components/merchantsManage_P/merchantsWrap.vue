@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 <template>
     <div>
    <div style="margin-top: 20px">
@@ -369,5 +368,3 @@ export default {
   }
 };
 </script>
-
->>>>>>> da6624c36027a9c2cad0a5662976208c4b84147d

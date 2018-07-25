@@ -1,17 +1,17 @@
-let { addGoods,getGoods,delGoods,xiuGoods } = require('../dao/goodsDao')
+let {addService,getService,delService,xiuService} = require('../dao/serviceDao')
 
-module.exports.addGoods = async (data) => {
-    return await addGoods(data);
+module.exports.addService = async (data) => {
+    return await addService(data);
 }
 
-module.exports.getGoods = async (data) => {
-    return await getGoods(data);
+module.exports.getService = async (data) => {
+    return await getService(data);
 }
 
-module.exports.delGoods = async (data) => {
-    return await delGoods(data);
+module.exports.delService = async (data) => {
+    return await delService(data);
 }
 
-module.exports.xiuGoods = async (data) => {
-    return await xiuGoods(data);
+module.exports.xiuService = async (data) => {
+    return await xiuService(data);
 }

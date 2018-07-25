@@ -1,17 +1,10 @@
 let mongoose = require('mongoose');
 
-module.exports.addGoods=async (data)=>{
-   let {goodsImg,_id,usersId}=await mongoose.model('goods').create(data);
+module.exports.addService=async (data)=>{
+   let {serviceImg,_id,usersId}=await mongoose.model('services').create(data);
    await mongoose.model('imgs')
    .update({
-        _id:goodsImg[0],
-    },{ 
-        goodsId:_id,
-    });
-
-    await mongoose.model('imgs')
-    .update({
-        _id:goodsImg[1],
+        _id:serviceImg,
     },{ 
         goodsId:_id,
     });
@@ -20,20 +13,20 @@ module.exports.addGoods=async (data)=>{
     .update({
          _id:usersId
      },{ 
-        goods:_id,
+        services:_id,
      });
 }
 
-module.exports.getGoods=async ({curPage,eachPage})=>{
+module.exports.getService=async ({curPage,eachPage})=>{
     let result = {};
     page = Number(curPage);
     rows = Number(eachPage);
-    let data = mongoose.model('goods');
+    let data = mongoose.model('services');
     result.total = await data.count();
     result.rows = await data
         .find()
         .populate({
-            path:'goodsImg',
+            path:'serviceImg',
         })
         .sort({ _id: -1 })
         .skip((page - 1) * rows)
@@ -42,27 +35,21 @@ module.exports.getGoods=async ({curPage,eachPage})=>{
     return result;
 }
 
-module.exports.delGoods=async ({_id})=>{
-    return await mongoose.model('goods').remove({_id});
-    // return mongoose.model('goods').find();
+module.exports.delService=async ({_id})=>{
+    return await mongoose.model('services').remove({_id});
 }
 
 
-module.exports.xiuGoods=async (data)=>{
+module.exports.xiuService=async (data)=>{
 
-    await mongoose.model('goods').update({_id:data._id},data);
+    await mongoose.model('services').update({_id:data._id},data);
 
-    await mongoose.model('imgs')
-    .update({
-        _id:data.goodsImg[0]._id,
-    },{ 
-        url:data.goodsImg[0].url,
-    });
-
+    console.log(data)
     return await mongoose.model('imgs')
     .update({
-        _id:data.goodsImg[1]._id,
+        _id:data.serviceImg[0]._id,
     },{ 
-        url:data.goodsImg[1].url,
+        url:data.serviceImg[0].url,
     });
+
 }
