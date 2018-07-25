@@ -6,10 +6,12 @@ import Info_Merchants from './views/login/info_Merchants.vue'
 import Info_Platform from './views/login/info_Platform.vue'
 
 import GoodsWrap from './components/goodsManage/goodsWrap'
+import AddGoods from './components/goodsManage/addGoods'
 import MemberWrap from './components/memberManage/memberWrap'
 import OrderWrap from './components/orderManage/orderWrap.vue'
 import PetWrap from './components/petManage/petWrap'
 import ServiceWrap from './components/serviceManage/serviceWrap'
+import AddService from './components/serviceManage/addService'
 import UserWrap from './components/userManage/userWrap'
 import MerchantsWrap from './components/merchantsManage/merchantsWrap'
 
@@ -44,7 +46,10 @@ export default new Router({
       children: [{
         path: 'goodsWrap',
         component: GoodsWrap,
-      }, {
+      },{
+        path:'addGoods',
+        component:AddGoods,
+      },{
         path: 'memberWrap',
         component: MemberWrap,
       }, {
@@ -56,6 +61,9 @@ export default new Router({
       }, {
         path: 'serviceWrap',
         component: ServiceWrap,
+      },{
+        path:'addService',
+        component:AddService,
       }, {
         path: 'userWrap',
         component: UserWrap,

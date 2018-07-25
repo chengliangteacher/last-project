@@ -32,18 +32,27 @@ var ServiceSchema = new Schema({
 	},
 	// 服务员等级
 	serviceLevel: {
-		type: Number
+		type: String
 	},
 
 	// 价格
 	servicePrice: {
 		type: Number
 	},
+
+	serviceImg:[{
+		type: Schema.Types.ObjectId,
+		ref: "imgs"
+	}],
 	//用户联系
     usersId: {
 		type: Schema.Types.ObjectId,
 		ref: 'users'
 	},
 });
+
+// ServiceSchema.virtual('show_time').get(function() {
+// 	return moment(this.serviceSchedule).format('YYYY-MM-DD HH:mm');
+// });
 
 mongoose.model("services", ServiceSchema, "services");

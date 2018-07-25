@@ -1,7 +1,7 @@
 <template>
     <div class="listEl">
         <div class='coming'>
-            <span>{{time}} 大兄弟 欢迎您 | 门店管理员</span>
+            <span>{{time}} {{username}} 欢迎您 | 门店管理员</span>
         </div>
         <img src="../../../public/img/3976678470985158471.jpg" class="headerImg" />
         <div class="elList">
@@ -35,8 +35,12 @@
 export default {
   data() {
     return {
-      time: new Date().toLocaleString()
-    };
+      time: new Date().toLocaleString(),
+      username:''
+    }
+  },
+  created(){
+     this.username=localStorage.username='程亮'
   }
 };
 </script>
@@ -65,7 +69,7 @@ export default {
 
 .el-menu-vertical-demo {
   width: 100%;
-  height: 500px;
+  height: 1100px;
   display: inline-block;
 }
 .box_card {

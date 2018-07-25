@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> adf384a1684bca571e73f185156ff166ff82371f
 <template>
     <div>
    <div style="margin-top: 20px">
@@ -126,6 +130,8 @@
   </div>
         <el-table
             ref="multipleTable"
+            :stripe="true"
+            :highlight-current-row ='true'
             tooltip-effect="dark"
             style="width: 100%"
             textAlign='center'
@@ -203,7 +209,7 @@
  
 </template>
 <script>
-import { mapActions, mapState ,mapMutations} from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -242,7 +248,7 @@ export default {
       const arr = this.multipleSelection.map(({ _id }) => {
         return _id;
       });
-      this.deleteshops(arr)
+      this.deleteshops(arr);
       this.initshopdata();
     },
     handleSelectionChange(val) {
@@ -252,15 +258,15 @@ export default {
       }
     },
     handleSizeChange(val) {
-      this.changeSize(val)
-      this.initshopdata()
+      this.changeSize(val);
+      this.initshopdata();
     },
     handleCurrentChange(val) {
-      this.changePage(val)
-      this.initshopdata()
+      this.changePage(val);
+      this.initshopdata();
     },
     ...mapActions("shops", ["initshopdata", "deleteshops"]),
-    ...mapMutations("shops",["changeSize","changePage"]),
+    ...mapMutations("shops", ["changeSize", "changePage"]),
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
@@ -300,7 +306,7 @@ export default {
               instance.confirmButtonLoading = false;
               this.shop0 = "";
               this.shop1 = "";
-              this.modefiyForm={}
+              this.modefiyForm = {};
               done();
               this.initshopdata();
               return res.json();
@@ -359,7 +365,7 @@ export default {
     }
   },
   created() {
-    localStorage.usersId="5b560a7e4dd9ed575822702e"
+    localStorage.usersId = "5b560a7e4dd9ed575822702e";
     this.initshopdata();
   },
   computed: {
@@ -367,4 +373,7 @@ export default {
   }
 };
 </script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> adf384a1684bca571e73f185156ff166ff82371f
