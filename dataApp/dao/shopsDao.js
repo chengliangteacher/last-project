@@ -1,9 +1,34 @@
 const mongoose = require("mongoose")
 var fs=require('fs')
 
-//查询
+//查询(门店管理员查询，设计条件查询)
 module.exports.getshops = async ({
-    curpage,
+    curPage,
+    count,
+    usersId
+}) => {
+    const shopsmodel = mongoose.model("shops")
+    const shop = await shopsmodel.find({usersId:usersId})
+        .populate([{
+                path: 'shopLicenceImg'
+            },
+            {
+                path: 'shopImg'
+            }
+        ])
+        .skip((curPage-1)*count)
+        .limit(count)
+    const total = await shopsmodel.find().count()
+    return {
+        shop,
+        total,
+    }
+}
+
+
+//查询（平台管理员查询，即全部查询）
+module.exports.getshopsall = async ({
+    curPage,
     count
 }) => {
     const shopsmodel = mongoose.model("shops")
@@ -15,7 +40,7 @@ module.exports.getshops = async ({
                 path: 'shopImg'
             }
         ])
-        .skip(curpage)
+        .skip((curPage-1)*count)
         .limit(count)
     const total = await shopsmodel.find().count()
     return {
@@ -65,6 +90,26 @@ module.exports.deleteshops = async ({
     const shopsmodel = mongoose.model("shops")
     const imgsmodel=mongoose.model('imgs')
     const arr=await shopsmodel.find({_id})
+    const usersId=arr[0].usersId
+    const deletshops=await mongoose.model('users').find({_id:usersId})
+    const temp=deletshops[0].shops
+    const k= temp.filter(item=>{
+        let isbool=_id.every(value=>{
+            if(item!=value){
+                return true
+            }else{
+                return false
+            }
+        })
+        if(isbool===true){
+            return item
+        }
+    })
+    await mongoose.model('users').update({
+        _id:usersId
+    },{
+        shops:k
+    })
     const shopImgarr=arr.map(({shopImg})=>{
         return shopImg
     })

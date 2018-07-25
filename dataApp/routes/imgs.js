@@ -5,7 +5,7 @@ const {
 	uploadFile
 } = require('../util/upload')
 
-const { addImg } = require("../service/imgsService")
+const { addImg,getImg,} = require("../service/imgsService")
 
 router.post('/upload', async function (req, res, next) {
 	const {type}=req.query
@@ -20,5 +20,9 @@ router.post('/upload', async function (req, res, next) {
 	res.send(await addImg({...data,type}))
 
 });
+router.post('/getImg', async function (req, res, next) {
+	res.send(await getImg())
+});
+
 
 module.exports = router;

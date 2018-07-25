@@ -1,17 +1,42 @@
 var mongoose = require('mongoose');
+require("./model/users.js")
+var dbURI = 'mongodb://localhost/last';
+
+
+require("./model/goods.js")
+require("./model/imgs.js")
+require("./model/users.js")
+require("./model/services.js")
 
 mongoose.Promise=require("bluebird")
 require("./model/orders.js")
-var dbURI = 'mongodb://localhost/dingdan';
+<<<<<<< HEAD
+
 
 // require("./model/movie.js")
+
+require("./model/members")
+var dbURI = 'mongodb://localhost/pets';
+
 require('./model/imgs')
 require('./model/shops')
 require('./model/users')
+<<<<<<< HEAD
 require('./model/goods')
 require('./model/members')
 require('./model/services')
 // var dbURI = 'mongodb://localhost/second';
+=======
+
+
+=======
+
+require('./model/imgs')
+require('./model/shops')
+
+// mongoose.Promise=require("bluebird")
+>>>>>>> aa7ed89bfacd374973410b15577031d1284095db
+>>>>>>> 001b5ef0571e11d3ea2f5392232fdf1e05104df7
 
 mongoose.connect(dbURI);
 

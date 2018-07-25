@@ -12,12 +12,21 @@ export default {
         initshops(state, data) {
             Object.assign(state.data, data)
         },
+        initshopsall(state, data) {
+            Object.assign(state.data, data)
+        },
         deleteshops(state){
             return state.data
+        },
+        changeSize(state,value){
+            state.data.count=value
+        },
+        changePage(state,value){
+            state.data.curPage=value
         }
     },
     actions: {
-        async initshopdata(context,usersId='5b52fc32c1327356b8daafcd') {
+        async initshopdata(context,usersId=localStorage.usersId) {
             let data = await fetch("/shops/getshops", {
                 method: "post",
                 headers: {
@@ -29,10 +38,24 @@ export default {
                     usersId,
                 })
             }).then(res => res.json());
-            console.log(data)
             context.commit('initshops', data)
         },
-        async deleteshops(context, arr,cb=()=>{}) {
+
+        async initshopdataall(context) {
+            let data = await fetch("/shops/getshopsall", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    curPage: context.state.data.curPage,
+                    count: context.state.data.count,
+                })
+            }).then(res => res.json());
+            context.commit('initshopsall', data)
+        },
+
+        async deleteshops(context, arr) {
             await fetch("/shops/deleteshops", {
                 method: "post",
                 headers: {
@@ -42,7 +65,7 @@ export default {
                     _id:arr
                 })
             }).then(res =>{
-                cb()
+                res.json()
             });
             context.commit('deleteshops')
         }

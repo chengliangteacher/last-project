@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> adf384a1684bca571e73f185156ff166ff82371f
 <template>
     <div>
    <div style="margin-top: 20px">
@@ -20,10 +24,8 @@
           <el-upload
             :action="actions"
             :on-success="success"
-            :before-remove="removeImg"	
             list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove">
+            :on-preview="handlePictureCardPreview">
             <i class="el-icon-plus"></i>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
@@ -49,8 +51,7 @@
             action="/imgs/upload?type=shop1"
             :on-success="successheader"
             list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove">            
+            :on-preview="handlePictureCardPreview">            
             <i class="el-icon-plus"></i>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
@@ -82,10 +83,8 @@
           <el-upload
             :action="actions"
             :on-success="success"
-            :before-remove="removeImg"	
             list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove">
+            :on-preview="handlePictureCardPreview">
             <i class="el-icon-plus"></i>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
@@ -112,8 +111,7 @@
             action="/imgs/upload?type=shop1"
             list-type="picture-card"
             :on-success="successheader"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove">
+            :on-preview="handlePictureCardPreview">
             <i class="el-icon-plus"></i>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
@@ -132,6 +130,8 @@
   </div>
         <el-table
             ref="multipleTable"
+            :stripe="true"
+            :highlight-current-row ='true'
             tooltip-effect="dark"
             style="width: 100%"
             textAlign='center'
@@ -209,7 +209,7 @@
  
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -244,39 +244,29 @@ export default {
         this.$refs.multipleTable.clearSelection();
       }
     },
-    changeinput() {
-      console.log("in");
-    },
-    removeImg() {
-      console.log("in");
-    },
     deleteSelection() {
       const arr = this.multipleSelection.map(({ _id }) => {
         return _id;
       });
-      this.deleteshops(arr)
+      this.deleteshops(arr);
       this.initshopdata();
-    },
-    modefiySelection(rows) {
-      console.log(rows);
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
       if (val[0]) {
         this.form = val[0];
       }
-      console.log(this.form);
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.changeSize(val);
+      this.initshopdata();
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.changePage(val);
+      this.initshopdata();
     },
     ...mapActions("shops", ["initshopdata", "deleteshops"]),
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
+    ...mapMutations("shops", ["changeSize", "changePage"]),
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
@@ -307,7 +297,7 @@ export default {
               body: JSON.stringify({
                 data: {
                   ...this.modefiyForm,
-                  usersId: "5b52fc32c1327356b8daafcd"
+                  usersId: localStorage.usersId
                 },
                 shopLicenceImg: this.shop0,
                 shopImg: this.shop1
@@ -316,7 +306,7 @@ export default {
               instance.confirmButtonLoading = false;
               this.shop0 = "";
               this.shop1 = "";
-              this.modefiyForm={}
+              this.modefiyForm = {};
               done();
               this.initshopdata();
               return res.json();
@@ -325,7 +315,7 @@ export default {
             done();
           }
         }
-      }).then(action => {
+      }).then(() => {
         this.$message({
           type: "info",
           message: "添加成功"
@@ -366,7 +356,7 @@ export default {
             done();
           }
         }
-      }).then(action => {
+      }).then(() => {
         this.$message({
           type: "info",
           message: "修改成功"
@@ -375,6 +365,7 @@ export default {
     }
   },
   created() {
+    localStorage.usersId = "5b560a7e4dd9ed575822702e";
     this.initshopdata();
   },
   computed: {
@@ -382,4 +373,7 @@ export default {
   }
 };
 </script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> adf384a1684bca571e73f185156ff166ff82371f
