@@ -64,7 +64,7 @@ export default({
             context.commit('getService', data)
         },
 
-        async async_addService(context,{serviceName,serviceType,serviceSchedule,serviceCanFor,serviceDetial,serviceTime,serviceLevel,servicePrice,serviceImg}) {
+        async async_addService(context,{serviceName,serviceType,serviceSchedule,serviceCanFor,serviceDetial,serviceTime,serviceLevel,servicePrice,serviceImg,usersId}) {
             await fetch("/service/addService", {
                 method: "post",
                 body: JSON.stringify({
@@ -77,7 +77,7 @@ export default({
                     serviceLevel,
                     servicePrice,
                     serviceImg,
-                    usersId:'5b55db78d54e387d24bc9386',
+                    usersId,
                 }),
                 headers: {
                     "Content-Type": "application/json"

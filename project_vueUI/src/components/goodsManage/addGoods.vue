@@ -90,43 +90,47 @@
     </el-form-item>
     <el-form-item>
         <el-button type="primary" @click="async_addGoods({goodsName,goodsType,goodsMaterial,goodsMath,goodsCanFor,goodsOnlyFor,goodsSize,goodsTaste,goodsSpecial,
-        goodsRegion,goodsDate,goodsTime,goodsSupplier,goodsIntro,goodsPrice,goodsImg})">立即创建</el-button>
+        goodsRegion,goodsDate,goodsTime,goodsSupplier,goodsIntro,goodsPrice,goodsImg,usersId})">立即创建</el-button>
         <el-button>取消</el-button>
     </el-form-item>
 </el-form>
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from "vuex";
 export default {
-    data(){
-        return{
-            goodsName:"猫粮",
-            goodsType:"猫砂",
-            goodsMaterial:"猫砂",
-            goodsMath:"烘焙",
-            goodsCanFor:"幼年",
-            goodsOnlyFor:"狗类",
-            goodsSize:"1kg",
-            goodsTaste:"牛肉味",
-            goodsSpecial:"无",
-            goodsRegion:"国内",
-            goodsDate:"",
-            goodsTime:"1年",
-            goodsSupplier:"天猫",
-            goodsIntro:"和平vkdfkdfnbfdbndflghidfkflsdfosof",
-            goodsPrice:"42",
-            goodsImg:[],
-            dialogImageUrl: '',
-            dialogVisible: false
-        }
-    },
-    methods: {
-        ...mapActions("goodsManage",["async_addGoods"]),
-        getImgsId(response) {
-            this.goodsImg.push(response.imgId);
-        }
+  created() {
+    localStorage.usersId = "5b584965b4bb1641f85483cd";
+  },
+  data() {
+    return {
+      goodsName: "猫粮",
+      goodsType: "猫砂",
+      goodsMaterial: "猫砂",
+      goodsMath: "烘焙",
+      goodsCanFor: "幼年",
+      goodsOnlyFor: "狗类",
+      goodsSize: "1kg",
+      goodsTaste: "牛肉味",
+      goodsSpecial: "无",
+      goodsRegion: "国内",
+      goodsDate: "",
+      goodsTime: "1年",
+      goodsSupplier: "天猫",
+      goodsIntro: "和平vkdfkdfnbfdbndflghidfkflsdfosof",
+      goodsPrice: "42",
+      goodsImg: [],
+      usersId:localStorage.usersId,
+      dialogImageUrl: "",
+      dialogVisible: false
+    };
+  },
+  methods: {
+    ...mapActions("goodsManage", ["async_addGoods"]),
+    getImgsId(response) {
+      this.goodsImg.push(response.imgId);
     }
-}
+  }
+};
 </script>
 

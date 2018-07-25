@@ -45,11 +45,24 @@ module.exports.getGoods=async ({curPage,eachPage})=>{
 }
 
 module.exports.delGoods=async ({_id})=>{
-    return await mongoose.model('goods').remove({_id});
-    // return await mongoose.model('users')
-    // .remove({
-    //     goods:_id
-    // });
+    await mongoose.model('goods').remove({_id});
+    let data = await mongoose
+    .model("users")
+    .find({
+        goods: _id
+    })
+    let good=data[0].goods;
+    let datas= good.filter(item=>{
+        if(item!=_id){
+            return item;
+        }
+    })
+
+    return await mongoose
+    .model("users")
+    .update({
+        goods: datas
+    })
 }
 
 

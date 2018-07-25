@@ -85,7 +85,7 @@ export default({
                     goodsIntro,
                     goodsPrice,
                     goodsImg,
-                    usersId:'5b55db78d54e387d24bc9386',
+                    usersId,
                 }),
                 headers: {
                     "Content-Type": "application/json"

@@ -50,7 +50,7 @@
         </el-dialog>
     </el-form-item>
     <el-form-item>
-        <el-button @click="async_addService({serviceName,serviceType,serviceSchedule,serviceCanFor,serviceDetial,serviceTime,serviceLevel,servicePrice,serviceImg})" type="primary">立即创建</el-button>
+        <el-button @click="async_addService({serviceName,serviceType,serviceSchedule,serviceCanFor,serviceDetial,serviceTime,serviceLevel,servicePrice,serviceImg,usersId})" type="primary">立即创建</el-button>
         <el-button>取消</el-button>
     </el-form-item>
 </el-form>
@@ -59,6 +59,9 @@
 <script>
 import {mapActions} from "vuex";
 export default {
+    created(){
+        localStorage.usersId = "5b584965b4bb1641f85483cd";
+    },
      data(){
         return{
             serviceName:'美美哒',
@@ -70,8 +73,9 @@ export default {
             serviceLevel:'普通',
             servicePrice:'34',
             serviceImg:'',
+            usersId:localStorage.usersId,
             dialogImageUrl: '',
-            dialogVisible: false
+            dialogVisible: false,
         }
     },
     methods: {
