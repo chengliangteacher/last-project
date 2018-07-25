@@ -19,28 +19,46 @@
           <el-form-item label="名称">
             <span>{{ props.row.name }}</span>
           </el-form-item>
-          <el-form-item label="服务类别">
+          <el-form-item label="品类">
             <span>{{ props.row.shop }}</span>
           </el-form-item>
-          <el-form-item label="营业执照号码">
+          <el-form-item label="材质或制作方法">
             <span>{{ props.row.id }}</span>
           </el-form-item>
-          <el-form-item label="排期">
+          <el-form-item label="适用规格">
             <span>{{ props.row.shopId }}</span>
           </el-form-item>
-          <el-form-item label="适用规格">
+          <el-form-item label="专属规格">
             <span>{{ props.row.category }}</span>
           </el-form-item>
-          <el-form-item label="服务规格">
+          <el-form-item label="包装规格">
             <span>{{ props.row.address }}</span>
           </el-form-item>
-          <el-form-item label="耗时">
+          <el-form-item label="口味">
             <span>{{ props.row.desc }}</span>
           </el-form-item>
-          <el-form-item label="服务员等级">
+          <el-form-item label="特殊功用">
+            <span>{{ props.row.desc }}</span>
+          </el-form-item>
+          <el-form-item label="产地">
+            <span>{{ props.row.desc }}</span>
+          </el-form-item>
+          <el-form-item label="出厂日期">
+            <span>{{ props.row.desc }}</span>
+          </el-form-item>
+          <el-form-item label="保质期">
+            <span>{{ props.row.desc }}</span>
+          </el-form-item>
+          <el-form-item label="供应商">
+            <span>{{ props.row.desc }}</span>
+          </el-form-item>
+          <el-form-item label="特色说明">
             <span>{{ props.row.desc }}</span>
           </el-form-item>
           <el-form-item label="价格">
+            <span>{{ props.row.desc }}</span>
+          </el-form-item>
+          <el-form-item label="图片">
             <span>{{ props.row.desc }}</span>
           </el-form-item>
         </el-form>
@@ -55,19 +73,19 @@
       prop="id">
     </el-table-column>
     <el-table-column
-      label="服务类别"
+      label="商品品类"
       prop="name">
     </el-table-column>
     <el-table-column
-      label="营业执照号码"
+      label="材质或制作方法"
       prop="desc">
     </el-table-column>
         <el-table-column
-      label="排期"
+      label="适用规格"
       prop="shopId">
     </el-table-column>
         <el-table-column
-      label="适用规格"
+      label="专属规格"
       prop="category">
     </el-table-column>
     <el-table-column label="操作">
