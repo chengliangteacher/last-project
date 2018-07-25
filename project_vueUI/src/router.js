@@ -8,7 +8,7 @@ import Info_Platform from './views/login/info_Platform.vue'
 import GoodsWrap from './components/goodsManage/goodsWrap'
 import AddGoods from './components/goodsManage/addGoods'
 import MemberWrap from './components/memberManage/memberWrap'
-import OrderWrap from './components/orderManage/orderWrap'
+import OrderWrap from './components/orderManage/orderWrap.vue'
 import PetWrap from './components/petManage/petWrap'
 import ServiceWrap from './components/serviceManage/serviceWrap'
 import AddService from './components/serviceManage/addService'
@@ -19,6 +19,7 @@ import GoodsWrap_P from './components/goodsManage_P/goodsWrap'
 import MerchantsWrap_P from './components/merchantsManage_P/merchantsWrap'
 import MessageWrap_P from './components/message_P/messageWrap'
 import PetOwnersWrap_P from './components/petOwners_P/petOwnersWrap'
+import PetOwnersAdd_P from "./components/petOwners_P/petOwnersAdd"
 
 Vue.use(Router)
 
@@ -52,7 +53,7 @@ export default new Router({
         path: 'memberWrap',
         component: MemberWrap,
       }, {
-        path: 'orderWrap',
+        path: 'OrderWrap',
         component: OrderWrap,
       }, {
         path: 'petWrap',
@@ -86,6 +87,9 @@ export default new Router({
       }, {
         path: 'petOwnersWrap_P',
         component: PetOwnersWrap_P,
+      },{
+        path: 'petOwnersAdd_P',
+        component: PetOwnersAdd_P,
       }]
     }
   ]
