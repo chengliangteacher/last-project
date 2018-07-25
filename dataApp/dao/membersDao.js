@@ -27,11 +27,15 @@ module.exports.addMembers = async (members) => {
     .model("members")
     .create(members)
 }
-module.exports.removeMembers = async (id) => {
-  return await mongoose
+module.exports.removeMembers = async (id,picId) => {
+   await mongoose
     .model("members")
     .find()
     .remove({_id:id})
+return await mongoose
+    .model("imgs")
+    .find()
+    .remove({_id:picId})
 }
 
 module.exports.xiuMembers = async ({_id,memberPhone,memberAcount,memberName,menberCard,memberImg,memberAdd,memberArea,memberPoint,pets}) => {

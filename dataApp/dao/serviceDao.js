@@ -11,13 +11,13 @@ module.exports.addService = async (data) => {
             });
 
     return await mongoose.model('users')
-    .update({
-        _id: usersId
-    }, {
-        $push: {
-            services: _id,
-        }
-    });
+        .update({
+            _id: usersId
+        }, {
+                $push: {
+                    services: _id,
+                }
+            });
 }
 
 module.exports.getService = async ({ curPage, eachPage }) => {
@@ -39,11 +39,25 @@ module.exports.getService = async ({ curPage, eachPage }) => {
 }
 
 module.exports.delService = async ({ _id }) => {
-   return await mongoose.model('services').remove({ _id });
-//    return await mongoose.model('users')
-//    .remove({
-//        services:_id
-//    });
+    await mongoose.model('services').remove({ _id });
+    let data = await mongoose
+    .model("users")
+    .find({
+        services: _id
+    })
+    let service=data[0].services;
+    let datas= service.filter(item=>{
+        if(item!=_id){
+            return item;
+        }
+    })
+
+    return await mongoose
+    .model("users")
+    .update({
+        services: datas
+    })
+
 }
 
 

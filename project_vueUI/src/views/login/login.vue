@@ -19,7 +19,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item style="margin-left:5%;">
-            <el-button type="primary"  >登录</el-button>
+            <el-button type="primary" @click="login" >登录</el-button>
             <el-button @click="reg">注册</el-button>
           </el-form-item>
         </el-form>
@@ -70,11 +70,12 @@
               confirmButtonText: "确定"
             });
           }
-        }, 
-         
-    
+        },    
         reg() {
           this.$router.push("/reg");
+        },
+        login(){
+          this.$router.push("/info_Platform")
         }
       }
     };
@@ -90,10 +91,7 @@
       background-image: url("/img/ala1.png");
       background-repeat: no-repeat;
       background-size: 100%;
-     
-
     }
-
     .teloel {
       position: absolute;
       top: 0;

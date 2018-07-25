@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+const { addImg,getImg,} = require("../dao/imgsDao")
+
+module.exports.addImg = async img => {
+  return await addImg(img)
+}
+module.exports.getImg = async () => {
+  return await getImg()
+}
+=======
 
 const {addImg,delImg} = require("../dao/imgDao")
 
@@ -10,3 +20,4 @@ module.exports.delImg=async (data)=>{
 }
 
 
+>>>>>>> aa7ed89bfacd374973410b15577031d1284095db
