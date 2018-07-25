@@ -1,18 +1,58 @@
 <template>
-  <div>
+  <div class="container">
     <div style="margin:10px 0; width:350px">
-      <el-button 
-        style="marginLeft:10px"
-        type="primary"
-        @click="adduser()">
-        增加用户
-      </el-button>
-      <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
-        <el-table :data="gridData">
-          <el-table-column property="date" label="日期" width="150"></el-table-column>
-          <el-table-column property="name" label="姓名" width="200"></el-table-column>
-          <el-table-column property="address" label="地址"></el-table-column>
-        </el-table>
+      <el-button type="primary" @click="dialogFormVisible = true">增加用户</el-button>
+      <el-dialog title="增加用户" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+          <el-form-item label="用户名" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userAcount" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userPwd" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="联系方式" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userPhone" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userMail" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="用户类型" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userType" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="用户状态" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userStatus" auto-complete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="adduser(),dialogFormVisible = false">确 定</el-button>
+        </div>
+      </el-dialog>
+      <el-dialog title="修改用户" :visible.sync="dialogFormVisible1">
+        <el-form :model="form">
+          <el-form-item label="用户名" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userAcount" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userPwd" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="联系方式" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userPhone" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userMail" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="用户类型" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userType" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="用户状态" :label-width="formLabelWidth">
+            <el-input style="width:500px" v-model="form.userStatus" auto-complete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="dialogFormVisible1 = false">取 消</el-button>
+          <el-button type="primary" @click="alteruser1()">确 定</el-button>
+        </div>
       </el-dialog>
     </div>
     <el-table
@@ -49,7 +89,7 @@
           prop="_id"
           label="操作">
           <template slot-scope="scope">
-          <el-button @click="handleClick()" type="text" size="small">修改</el-button>
+          <el-button @click="alteruser(scope.$index, scope.row)" type="text" size="small">修改</el-button>
           <el-button @click="remuser(scope.row._id)" type="text" size="small">删除</el-button>
         </template>
         </el-table-column>
@@ -77,37 +117,19 @@ export default {
       curPage: 1,
       eachPage: 5,
       count: 100,
-
-      gridData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
-        dialogTableVisible: false,
-        dialogFormVisible: false,
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
-        formLabelWidth: '120px'
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      dialogFormVisible1: false,
+      form: {
+        userAcount: "1",
+        userPwd: "2",
+        userPhone: "3",
+        userMail: "4",
+        userType: "5",
+        userStatus: "6",
+        _id: ""
+      },
+      formLabelWidth: "120px"
     };
   },
 
@@ -142,23 +164,16 @@ export default {
       });
     },
 
-    async adduser(users) {
-      // this.$alert(
-      //   `
-      //   <input style="height:30px; width:90%; padding-left:10px; margin-bottom:25px" v-model="userAcount" placeholder="用户名"></input>
-      //   <input style="height:30px; width:90%; padding-left:10px; margin-bottom:25px" v-model="userPwd" placeholder="密码"></input>
-      //   <input style="height:30px; width:90%; padding-left:10px; margin-bottom:25px" v-model="userPhone" placeholder="电话号码"></input>
-      //   <input style="height:30px; width:90%; padding-left:10px; margin-bottom:25px" v-model="userMail" placeholder="邮箱"></input>
-      //   <input style="height:30px; width:90%; padding-left:10px; margin-bottom:25px" v-model="userType" placeholder="用户类型"></input>
-      //   <input style="height:30px; width:90%; padding-left:10px; margin-bottom:25px" v-model="userStatus" placeholder="用户状态"></input>
-      //   `, '增加用户', {
-      //     dangerouslyUseHTMLString: true
-      //   });
-
+    async adduser() {
       await fetch("/users/adduser", {
         method: "post",
         body: JSON.stringify({
-
+          userAcount: this.form.userAcount,
+          userPwd: this.form.userPwd,
+          userPhone: this.form.userPhone,
+          userMail: this.form.userMail,
+          userType: this.form.userType,
+          userStatus: this.form.userStatus
         }),
         headers: {
           "Content-Type": "application/json"
@@ -166,7 +181,37 @@ export default {
       }).then(() => {
         this.users();
       });
-      Console.log(users);
+    },
+
+    async alteruser(index, row) {
+      this.dialogFormVisible1 = true;
+      this.form.userAcount = row.userAcount;
+      this.form.userPwd = row.userPwd;
+      this.form.userPhone = row.userPhone;
+      this.form.userMail = row.userMail;
+      this.form.userType = row.userType;
+      this.form.userStatus = row.userStatus;
+      this.form._id = row._id;
+    },
+    async alteruser1(index, row) {
+      await fetch("/users/alteruser", {
+        method: "post",
+        body: JSON.stringify({
+          userAcount: this.form.userAcount,
+          userPwd: this.form.userPwd,
+          userPhone: this.form.userPhone,
+          userMail: this.form.userMail,
+          userType: this.form.userType,
+          userStatus: this.form.userStatus,
+          _id: this.form._id
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(() => {
+        this.users();
+      });
+      this.dialogFormVisible1 = false;
     },
 
     handleSizeChange(val) {
@@ -184,6 +229,10 @@ export default {
 </script>
 
 <style>
+*{
+  margin: 0;
+  padding: 0;
+}
 .block {
   background-color: #ccc;
   width: 50%;
@@ -191,5 +240,8 @@ export default {
   margin: 30px auto;
   text-align: center;
   border-radius: 5px;
+}
+.el-card__body{
+  background-color: #6cc;
 }
 </style>
