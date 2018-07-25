@@ -1,12 +1,13 @@
 <template>
 <div>
   <el-input
+    v-model="title"
     placeholder="按名称搜索"
     style="width:230px;marginRight:12px"
+    @change="async_findService(title)"
     clearable>
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
   </el-input>
-    <el-button type="primary" icon="el-icon-search">搜索</el-button>
     <el-button
       size="mini"
       @click="dialogFormVisible = true">修改
@@ -25,11 +26,7 @@
           </el-form-item>
             <el-form-item label="排期">
                 <el-col :span="6">
-                    <el-date-picker type="date" v-model="service[0].scheduleDate"  placeholder="选择日期" style="width: 100%;"></el-date-picker>
-                </el-col>
-                <el-col class="line" :span="1">-</el-col>
-                <el-col :span="6">
-                    <el-time-picker type="fixed-time" v-model="service[0].scheduleTime"  placeholder="选择时间" style="width: 100%;"></el-time-picker>
+                    <el-date-picker value-format="yyyy-MM-dd HH:mm" type="datetime" v-model="service[0].serviceSchedule"  placeholder="选择时间" style="width: 100%;"></el-date-picker>
                 </el-col>
           </el-form-item>
             <el-form-item label="适用规格" style="width:340px;">
@@ -70,11 +67,11 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false;async_xiuService(service[0])">修改</el-button>
+            <el-button type="primary" @click="dialogFormVisible = false;async_xiuService({service:service[0],delImg})">修改</el-button>
         </div>
     </el-dialog>
-    <el-button size="mini" type="text" icon="el-icon-caret-top">按热度排序</el-button>
-    <el-button size="mini" type="text" icon="el-icon-caret-top">按时间排序</el-button>
+    <el-button size="mini" type="text" icon="el-icon-caret-top" @click='async_getService'>按热度排序</el-button>
+    <el-button size="mini" type="text" icon="el-icon-caret-top" @click='async_pricePai'>按价格排序</el-button>
     <el-table
     :data="rows"
     @selection-change="handleSelectionChange"
@@ -158,11 +155,9 @@ export default {
   data(){
     return{
       service:[{
-        scheduleDate:'',
-        scheduleTime:'',
         serviceName:'美美哒',
         serviceType:'护理',
-        serviceSchedule:`${this.scheduleDate}+${this.scheduleTime}`,
+        serviceSchedule:'',
         serviceCanFor:'成狗',
         serviceDetial:'大',
         serviceTime:'30分钟',
@@ -171,6 +166,8 @@ export default {
         serviceImg:[{url:''}],
         usersId:'',
       }],
+      title:'',
+      delImg:'',
       dialogImageUrl: '',
       dialogVisible: false,
       dialogFormVisible: false,
@@ -193,11 +190,11 @@ export default {
   },
   
   computed:{
-    ...mapState(["curPage", "eachPage", "maxPage", "total", "rows"])
+    ...mapState("serviceManage",["curPage", "eachPage", "maxPage", "total", "rows"])
   },
-  methods: {
-    ...mapMutations(["handleSizeChange","handleCurrentChange"]),
-    ...mapActions(["async_getService","async_handleDelete","async_xiuService","async_findService"]),
+  methods:{
+    ...mapMutations("serviceManage",["handleSizeChange","handleCurrentChange"]),
+    ...mapActions("serviceManage",["async_getService","async_handleDelete","async_xiuService","async_findService","async_pricePai"]),
     handleDelete({servicesId,imgId}){
       this.async_handleDelete({servicesId,imgId})
       this.async_getService();
@@ -209,6 +206,7 @@ export default {
         this.$refs.multipleTable.clearSelection();
     },
     handleSelectionChange(val){
+      this.delImg=val[0].serviceImg[0].url;
       this.service=val;
     }
   }

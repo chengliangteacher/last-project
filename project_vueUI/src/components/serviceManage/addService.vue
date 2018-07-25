@@ -12,11 +12,7 @@
   </el-form-item>
     <el-form-item label="排期">
         <el-col :span="6">
-            <el-date-picker type="date" v-model="scheduleDate"  placeholder="选择日期" style="width: 100%;"></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="1">-</el-col>
-        <el-col :span="6">
-            <el-time-picker type="fixed-time" v-model="scheduleTime"  placeholder="选择时间" style="width: 100%;"></el-time-picker>
+            <el-date-picker value-format="yyyy-MM-dd HH:mm" type="datetime" v-model="serviceSchedule"  placeholder="选择时间" style="width: 100%;"></el-date-picker>
         </el-col>
   </el-form-item>
     <el-form-item label="适用规格" style="width:340px;">
@@ -54,7 +50,7 @@
         </el-dialog>
     </el-form-item>
     <el-form-item>
-        <el-button @click="async_addService({serviceName,serviceType,scheduleDate,scheduleTime,serviceCanFor,serviceDetial,serviceTime,serviceLevel,servicePrice,serviceImg})" type="primary">立即创建</el-button>
+        <el-button @click="async_addService({serviceName,serviceType,serviceSchedule,serviceCanFor,serviceDetial,serviceTime,serviceLevel,servicePrice,serviceImg})" type="primary">立即创建</el-button>
         <el-button>取消</el-button>
     </el-form-item>
 </el-form>
@@ -69,11 +65,9 @@ import {mapActions} from 'vuex'
 export default {
      data(){
         return{
-            scheduleDate:'',
-            scheduleTime:'',
             serviceName:'美美哒',
             serviceType:'护理',
-            serviceSchedule:`${this.scheduleDate}+${this.scheduleTime}`,
+            serviceSchedule:'',
             serviceCanFor:'成狗',
             serviceDetial:'大',
             serviceTime:'30分钟',
@@ -85,7 +79,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["async_addService"]),
+        ...mapActions("serviceManage",["async_addService"]),
         getImgsId(response) {
             this.serviceImg=response.imgId;
         }

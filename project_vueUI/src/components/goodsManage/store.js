@@ -1,5 +1,6 @@
 
 export default({
+    namespaced:true,
     state: {
         curPage: 1,
         eachPage:10,
@@ -95,17 +96,47 @@ export default({
 
         },
 
-
-        async async_xiuGoods(context, goods) {
-            const data = await fetch("/goods/xiuGoods", {
+        async async_xiuGoods(context, {goods,delImg}) {
+            await fetch("/goods/xiuGoods", {
                 method: "post",
-                body: JSON.stringify( goods,),
+                body: JSON.stringify({goods,delImg}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+        },
+
+        async async_findGoods(context,title){
+            const data = await fetch("/goods/findGoods", {
+                method: "post",
+                body: JSON.stringify({
+                    curPage: context.state.curPage,
+                    eachPage: context.state.eachPage,
+                    title,
+                }),
                 headers: {
                     "Content-Type": "application/json"
                 }
             }).then(res => {
                 return res.json();
             });
+            context.commit('getGoods', data)
+        },
+
+        async async_pricePai(context){
+            const data = await fetch("/goods/pricePai", {
+                method: "post",
+                body: JSON.stringify({
+                    curPage: context.state.curPage,
+                    eachPage: context.state.eachPage,
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => {
+                return res.json();
+            });
+            context.commit('getGoods',data)
         },
     }
 })

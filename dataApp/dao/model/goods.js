@@ -44,7 +44,7 @@ var GoodsSchema = new Schema({
     },
     // 出厂日期
     goodsDate: {
-        type: Date
+        type: String,
     },
     // 保质期
     goodsTime: {
@@ -67,14 +67,15 @@ var GoodsSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "imgs"
 	}],
-    usersId: {
+    usersId: { 
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
 });
 
-// GoodsSchema.virtual('goodsDate').get(function() {
-// 	return moment(this.goodsDate).format('YYYY-MM-DD HH:mm');
+// GoodsSchema.virtual('show_time').get(function() {
+// 	return moment(this.goodsDate).format('YYYY-MM-DD');
 // });
+
 
 mongoose.model("goods", GoodsSchema, "goods");

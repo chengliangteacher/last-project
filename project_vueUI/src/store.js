@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import Vuex from 'vuex'
 import petOwners_P from "./components/petOwners_P/store.js"

@@ -47,7 +47,7 @@
     </el-form-item>
     <el-form-item label="出厂日期">
         <el-col :span="11">
-            <el-date-picker v-model="goodsDate"  placeholder="请选择日期" style="width:340px;"></el-date-picker>
+            <el-date-picker type="date" v-model="goodsDate" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"  placeholder="请选择日期" style="width:340px;"></el-date-picker>
         </el-col>
     </el-form-item>
     <el-form-item label="保质期">
@@ -122,7 +122,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["async_addGoods"]),
+        ...mapActions("goodsManage",["async_addGoods"]),
         getImgsId(response) {
             this.goodsImg.push(response.imgId);
         }
