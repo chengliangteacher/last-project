@@ -6,13 +6,10 @@ import store from './store.js'
 // Vue.component("Addgoods",Addgoods)
 
 
-<<<<<<< HEAD
 import Addgoods from './components/goodsManage/addGoods'
 Vue.component("Addgoods",Addgoods)
 
 
-=======
->>>>>>> adf384a1684bca571e73f185156ff166ff82371f
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);

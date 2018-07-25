@@ -15,12 +15,9 @@ var orderWrapRouter =require("./routes/orderWrap");
 var shopsRouter=require('./routes/shops');
 var imgsRouter=require('./routes/imgs');
 
-<<<<<<< HEAD
 var orderWrapRouter =require("./routes/orderWrap")
 var shopsRouter=require('./routes/shops')
 var imgsRouter=require('./routes/imgs')
-=======
->>>>>>> adf384a1684bca571e73f185156ff166ff82371f
 var app = express();
 
 // view engine setup
@@ -39,17 +36,11 @@ app.use('/goods', goodsRouter);
 app.use('/files', filesRouter);
 app.use('/goodsImgs', goodsImgsRouter);
 app.use('/service', serviceImgsRouter);
-<<<<<<< HEAD
-=======
 app.use('/members', membersRouter);
->>>>>>> adf384a1684bca571e73f185156ff166ff82371f
 app.use('/users', orderWrapRouter);
 app.use('/shops', shopsRouter);
 app.use('/imgs', imgsRouter);
-<<<<<<< HEAD
 
-=======
->>>>>>> adf384a1684bca571e73f185156ff166ff82371f
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

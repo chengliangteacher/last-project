@@ -11,10 +11,7 @@ router.post('/remuser', async function (req, res, next) {
     res.send(await remuser(req.body))
 });
 
-<<<<<<< HEAD
-=======
 
->>>>>>> cdcb8cee8ac80f9235e9f95e2d7d11ad7a8fb83d
 router.post('/adduser', async function (req, res, next) {
     res.send(await adduser(req.body))
 });
@@ -25,7 +22,4 @@ router.post('/alteruser', async function (req, res, next) {
 });
 
 module.exports = router;
-<<<<<<< HEAD
-=======
 
->>>>>>> cdcb8cee8ac80f9235e9f95e2d7d11ad7a8fb83d

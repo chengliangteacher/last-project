@@ -57,11 +57,7 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import {mapActions} from "vuex";
-=======
-import {mapActions} from 'vuex'
->>>>>>> adf384a1684bca571e73f185156ff166ff82371f
 export default {
      data(){
         return{
