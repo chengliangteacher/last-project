@@ -1,7 +1,7 @@
 <template>
 <el-form ref="form"  label-width="120px">
   <el-form-item label="服务名称" style="width:340px;">
-    <el-input v-model="shopLicenceNum"></el-input>
+    <el-input v-model="serviceName"></el-input>
   </el-form-item>
   <el-form-item label="服务类别">
     <el-select v-model="serviceType"  placeholder="请选择服务类别">
@@ -12,17 +12,13 @@
   </el-form-item>
     <el-form-item label="排期">
         <el-col :span="6">
-            <el-date-picker type="date" v-model="scheduleDate"  placeholder="选择日期" style="width: 100%;"></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="1">-</el-col>
-        <el-col :span="6">
-            <el-time-picker type="fixed-time" v-model="scheduleTime"  placeholder="选择时间" style="width: 100%;"></el-time-picker>
+            <el-date-picker value-format="yyyy-MM-dd HH:mm" type="datetime" v-model="serviceSchedule"  placeholder="选择时间" style="width: 100%;"></el-date-picker>
         </el-col>
   </el-form-item>
     <el-form-item label="适用规格" style="width:340px;">
         <el-input v-model="serviceCanFor"></el-input>
     </el-form-item>
-    <el-form-item label="服务规格">
+    <el-form-item label="服务规格"  style="width:340px">
         <el-input v-model="serviceDetial"></el-input>
     </el-form-item>
     <el-form-item label="耗时">
@@ -39,16 +35,12 @@
             <el-radio label="贵宾"></el-radio>
         </el-radio-group>
     </el-form-item>
-    <el-form-item label="价格">
-        <el-radio-group v-model="servicePrice">
-            <el-radio label="普通价"></el-radio>
-            <el-radio label="会员价"></el-radio>
-            <el-radio label="活动价"></el-radio>
-        </el-radio-group>
+    <el-form-item label="价格"  style="width:340px">
+        <el-input v-model="servicePrice"></el-input>
     </el-form-item>
     <el-form-item label="上传图片" >
         <el-upload
-        action="/files/upload?type=good1"
+        action="/files/upload?type=service"
         list-type="picture-card"
         :on-success="getImgsId">
             <i class="el-icon-plus"></i>
@@ -58,37 +50,34 @@
         </el-dialog>
     </el-form-item>
     <el-form-item>
-        <el-button type="primary">立即创建</el-button>
+        <el-button @click="async_addService({serviceName,serviceType,serviceSchedule,serviceCanFor,serviceDetial,serviceTime,serviceLevel,servicePrice,serviceImg})" type="primary">立即创建</el-button>
         <el-button>取消</el-button>
     </el-form-item>
 </el-form>
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions} from "vuex";
 export default {
      data(){
         return{
-            scheduleDate:'',
-            scheduleTime:'',
-            shopLicenceNum:'',
-            serviceType:'',
-            serviceSchedule:`${scheduleDate}+${scheduleTime}`,
-            serviceCanFor:'',
-            serviceDetial:'',
-            serviceTime:'',
-            serviceLevel:'',
-            servicePrice:'',
+            serviceName:'美美哒',
+            serviceType:'护理',
+            serviceSchedule:'',
+            serviceCanFor:'成狗',
+            serviceDetial:'大',
+            serviceTime:'30分钟',
+            serviceLevel:'普通',
+            servicePrice:'34',
             serviceImg:'',
-            usersId:'',
             dialogImageUrl: '',
             dialogVisible: false
         }
     },
     methods: {
-        ...mapActions(["async_addService"]),
+        ...mapActions("serviceManage",["async_addService"]),
         getImgsId(response) {
-            this.goodsImg.push(response.imgId);
+            this.serviceImg=response.imgId;
         }
     }
 }

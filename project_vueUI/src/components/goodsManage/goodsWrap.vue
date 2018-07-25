@@ -1,12 +1,13 @@
 <template>
 <div>
     <el-input
-    placeholder="按名称搜索"
-    style="width:230px;marginRight:12px"
-    clearable>
-        <i slot="prefix" class="el-input__icon el-icon-search"></i>
-  </el-input>
-    <el-button type="primary" icon="el-icon-search">搜索</el-button>
+      v-model="title"
+      placeholder="按名称搜索"
+      @change="async_findGoods(title)"
+      style="width:230px;marginRight:12px"
+      clearable>
+          <i slot="prefix" class="el-input__icon el-icon-search"></i>
+    </el-input>
     <el-button
           type="primary"
           @click="dialogFormVisible = true">修改</el-button>
@@ -103,13 +104,13 @@
               </el-dialog>
           </el-form-item>
           <el-form-item>
-              <el-button  type="primary" @click="dialogFormVisible = false;async_xiuGoods(goods[0]);">修改</el-button>
+              <el-button  type="primary" @click="dialogFormVisible = false;async_xiuGoods({goods:goods[0],delImg});">修改</el-button>
               <el-button @click="dialogFormVisible = false">取消</el-button>
           </el-form-item>
       </el-form>
     </el-dialog>
-    <el-button size="mini" type="text" icon="el-icon-caret-top">按热度排序</el-button>
-    <el-button size="mini" type="text" icon="el-icon-caret-top">按时间排序</el-button>
+    <el-button size="mini" type="text" icon="el-icon-caret-top" @click="async_getGoods">按热度排序</el-button>
+    <el-button size="mini" type="text" icon="el-icon-caret-top" @click="async_pricePai">按价格排序</el-button>
     <el-table
     :data="rows"
     ref="multipleTable"
@@ -145,7 +146,7 @@
           <el-form-item label="产地">
             <span>{{ props.row.goodsRegion }}</span>
           </el-form-item>
-          <el-form-item label="出厂日期">
+          <el-form-item  label="出厂日期">
             <span>{{ props.row.goodsDate }}</span>
           </el-form-item>
           <el-form-item label="保质期">
@@ -176,10 +177,10 @@
       label="产地"
       prop="goodsRegion">
     </el-table-column>
-        <el-table-column
+      <el-table-column
       label="出厂日期"
       prop="goodsDate">
-    </el-table-column>
+      </el-table-column>
     <el-table-column
       label="图片">
        <template slot-scope="scope">
@@ -193,7 +194,7 @@
         <el-button
           size="mini"
           type="primary"
-          @click="handleDelete({goodsId:scope.row._id,imgId:scope.row.goodsImg},cb=>{cb})">删除</el-button>
+          @click="handleDelete({goodsId:scope.row._id,imgId:scope.row.goodsImg})">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -234,6 +235,8 @@ export default {
         goodsPrice:"",
         goodsImg:[{url:''},{url:''}],
       }],
+      delImg:[],
+      title:'',
       dialogFormVisible: false,
     }
   },
@@ -254,11 +257,11 @@ export default {
   },
   
   computed:{
-    ...mapState(["curPage", "eachPage", "maxPage", "total", "rows"])
+    ...mapState("goodsManage",["curPage", "eachPage", "maxPage", "total", "rows"])
   },
   methods: {
-    ...mapMutations(["handleSizeChange","handleCurrentChange"]),
-    ...mapActions(["async_getGoods","async_handleDelete","async_xiuGoods","async_findGoods"]),
+    ...mapMutations("goodsManage",["handleSizeChange","handleCurrentChange"]),
+    ...mapActions("goodsManage",["async_getGoods","async_handleDelete","async_xiuGoods","async_findGoods","async_pricePai"]),
     handleDelete({goodsId,imgId}){
       this.async_handleDelete({goodsId,imgId})
       this.async_getGoods();
@@ -273,8 +276,9 @@ export default {
         this.$refs.multipleTable.clearSelection();
     },
     handleSelectionChange(val){
+      this.delImg=val[0].goodsImg.map(item=>item.url);
       this.goods=val;
-    }
+    },
   }
 };
 </script>

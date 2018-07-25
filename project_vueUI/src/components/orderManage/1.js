@@ -12,6 +12,17 @@
 // db.emps.insert(arr);
 
 
+
+var arr = []
+arr.push({
+  shops: "红旗连锁",
+},
+  {
+    shops: "蓝旗连锁",
+  })
+db.emps.insert(arr);
+
+
 // <template>
 // <div>
 //     <el-table
@@ -48,9 +59,9 @@
 //       label="发货状态"
 //       show-overflow-tooltip>
 //     </el-table-column>
-    
-   
-    
+
+
+
 //   </el-table>
 //    <div class="block">
 //     <el-pagination
@@ -64,7 +75,7 @@
 //   </div>
 // </div>
 
-  
+
 // </template>
 
 // <script>

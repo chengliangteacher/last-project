@@ -6,8 +6,8 @@ module.exports.getMembersByPage = async (curPage, eachPage) => {
 module.exports.addMembers = async (members) => {
   return await addMembers(members)
 }
-module.exports.removeMembers = async (id) => {
-  return await removeMembers(id)
+module.exports.removeMembers = async (id,picId) => {
+  return await removeMembers(id,picId)
 }
 module.exports.xiuMembers = async (members) => {
   return await xiuMembers(members)

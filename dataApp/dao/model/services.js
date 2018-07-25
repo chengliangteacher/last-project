@@ -32,7 +32,7 @@ var ServiceSchema = new Schema({
 	},
 	// 服务员等级
 	serviceLevel: {
-		type: Number
+		type: String
 	},
 
 	// 价格
@@ -50,5 +50,9 @@ var ServiceSchema = new Schema({
 		ref: 'users'
 	},
 });
+
+// ServiceSchema.virtual('show_time').get(function() {
+// 	return moment(this.serviceSchedule).format('YYYY-MM-DD HH:mm');
+// });
 
 mongoose.model("services", ServiceSchema, "services");

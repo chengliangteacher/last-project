@@ -1,39 +1,35 @@
 let mongoose = require('mongoose');
-
-module.exports.addGoods=async (data)=>{
-   let {goodsImg,_id,usersId}=await mongoose.model('goods').create(data);
-   await mongoose.model('imgs')
-   .update({
-        _id:goodsImg[0],
-    },{ 
-        goodsId:_id,
-    });
-
+var fs = require('fs')
+module.exports.addService = async (data) => {
+    console.log(data)
+    let { serviceImg, _id, usersId } = await mongoose.model('services').create(data);
     await mongoose.model('imgs')
-    .update({
-        _id:goodsImg[1],
-    },{ 
-        goodsId:_id,
-    });
+        .update({
+            _id: serviceImg,
+        }, {
+                goodsId: _id,
+            });
 
     return await mongoose.model('users')
     .update({
-         _id:usersId
-     },{ 
-        goods:_id,
-     });
+        _id: usersId
+    }, {
+        $push: {
+            services: _id,
+        }
+    });
 }
 
-module.exports.getGoods=async ({curPage,eachPage})=>{
+module.exports.getService = async ({ curPage, eachPage }) => {
     let result = {};
     page = Number(curPage);
     rows = Number(eachPage);
-    let data = mongoose.model('goods');
+    let data = mongoose.model('services');
     result.total = await data.count();
     result.rows = await data
         .find()
         .populate({
-            path:'goodsImg',
+            path: 'serviceImg',
         })
         .sort({ _id: -1 })
         .skip((page - 1) * rows)
@@ -42,27 +38,90 @@ module.exports.getGoods=async ({curPage,eachPage})=>{
     return result;
 }
 
-module.exports.delGoods=async ({_id})=>{
-    return await mongoose.model('goods').remove({_id});
-    // return mongoose.model('goods').find();
+module.exports.delService = async ({ _id }) => {
+   return await mongoose.model('services').remove({ _id });
+//    return await mongoose.model('users')
+//    .remove({
+//        services:_id
+//    });
 }
 
 
-module.exports.xiuGoods=async (data)=>{
+module.exports.xiuService = async ({ service, delImg }) => {
 
-    await mongoose.model('goods').update({_id:data._id},data);
+    await mongoose.model('services').update({ _id: service._id }, service);
+
+    console.log(service, delImg)
 
     await mongoose.model('imgs')
-    .update({
-        _id:data.goodsImg[0]._id,
-    },{ 
-        url:data.goodsImg[0].url,
-    });
+        .update({
+            _id: service.serviceImg[0]._id,
+        }, {
+                url: service.serviceImg[0].url,
+            });
 
-    return await mongoose.model('imgs')
-    .update({
-        _id:data.goodsImg[1]._id,
-    },{ 
-        url:data.goodsImg[1].url,
-    });
+    let { unlink } = fs;
+    return await unlink('public' + delImg)
+
+}
+
+module.exports.findService = async ({ curPage = 0, eachPage = 10, title }) => {
+    const result = {
+        curPage: ~~curPage,
+        eachPage: ~~eachPage,
+    }
+    // try {
+    const goodsModel = mongoose.model("services")
+    result.total = await goodsModel.count({
+        serviceName: {
+            $regex: new RegExp(title)
+        }
+    })
+    result.rows = await
+        goodsModel.find({
+            serviceName: {
+                $regex: new RegExp(title)
+            }
+        })
+            .populate({
+                path: 'serviceImg',
+            })
+            .skip((result.curPage - 1) * result.eachPage)
+            .limit(result.eachPage)
+            .exec()
+    //   await new Promise((resolve) => {
+    //     setTimeout(() => {
+    //       resolve("")
+    //     }, 2000)
+    //   })
+    return result
+    // } catch (e) {
+    //   console.log('=============== getMovies 异常: =====================');
+    //   console.log(e);
+    //   console.log('====================================');
+    // }
+}
+
+
+module.exports.pricePai = async ({ curPage = 0, eachPage = 10 }) => {
+
+    const result = {
+        curPage: ~~curPage,
+        eachPage: ~~eachPage,
+    }
+
+    const serviceModel = mongoose.model("services")
+    result.total = await serviceModel.count()
+    result.rows = await
+        serviceModel
+            .find()
+            .populate({
+                path: 'serviceImg',
+            })
+            .sort({ servicePrice: 1 })
+            .skip((result.curPage - 1) * result.eachPage)
+            .limit(result.eachPage)
+            .exec()
+
+    return result;
 }

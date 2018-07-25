@@ -7,6 +7,7 @@
   </el-menu>
 
     <el-table
+      :Img="this.Img"
       :data="rows"
       style="width: 100%">
       <el-table-column type="expand">
@@ -15,10 +16,12 @@
             <el-form-item label="会员卡">
               <span>{{ props.row.menberCard }}</span>
             </el-form-item>
-            <el-form-item label="头图">
-              <!-- <span>{{props.row.memberImg}}</span> -->
-              <img src="" alt="图片">
+            <el-form-item label="头图" :label-width="formLabelWidth">
+              <div v-for="(item) in Img" :key="item._id">
+                  <img style="width:50px" v-if="item._id==props.row.memberImg" :src="item.url" alt="wu">                 
+              </div>
             </el-form-item>
+
             <el-form-item label="送货地址">
               <span>{{ props.row.memberAdd }}</span>
             </el-form-item>
@@ -150,11 +153,10 @@ import { mapMutations, mapState, mapActions } from "vuex";
 export default {
   created() {
     this.$store.dispatch("petOwners_P/async_getMembersByPage");
+    this.$store.dispatch("petOwners_P/async_getImg");
   },
   watch: {
-    // rows(){
-    //   console.log(this.rows)
-    // },
+    
     curPage() {
       this.$store.dispatch("petOwners_P/async_getMembersByPage");
     },
@@ -172,11 +174,13 @@ export default {
       "curPage",
       "eachPage",
       "maxPage",
-      "count"
+      "count",
+      "Img"
     ])
   },
   methods: {
-    ...mapActions("petOwners_P", ["async_removeMembers", "async_xiuMembers","async_getMembersByPage"]),
+    
+    ...mapActions("petOwners_P", ["async_removeMembers", "async_xiuMembers","async_getMembersByPage","async_removeImg"]),
     ...mapMutations("petOwners_P", [
       "firstBtn",
       "preBtn",
@@ -185,6 +189,11 @@ export default {
       "handleSizeChange",
       "handleCurrentChange"
     ]),
+    // getImg(_id){
+      
+    //  this.async_getImg(_id)
+    //  return this.url
+    // },
     handleClose() {
       this.form.value = "";
       this.form.petOne = "";
@@ -204,6 +213,7 @@ export default {
         if (index == this.form.indexing) {
           item = this.form.petOne;
         }
+
       });
       this.async_xiuMembers({
         _id: this.form._id,
@@ -212,8 +222,8 @@ export default {
         memberName: this.form.memberName,
         menberCard: this.form.menberCard,
         memberImg: this.form.memberImg,
-        memberAdd: this.form.memberArea,
-        memberArea: this.form.memberPoint,
+        memberAdd: this.form.memberAdd,
+        memberArea: this.form.memberArea,
         memberPoint: this.form.memberPoint,
         pets: this.form.pets
       });
@@ -233,7 +243,7 @@ export default {
       });
     },
     handleDelete(row) {
-      this.async_removeMembers(row._id);
+         this.async_removeMembers({_id:row._id,picId:row.memberImg});
       this.$store.dispatch("petOwners_P/async_getMembersByPage");
     },
     handleUpdate(row) {
@@ -273,7 +283,8 @@ export default {
         value: "",
         petOne: "",
         indexing: "",
-        _id:""
+        _id:"",
+        urling:""
       },
       formLabelWidth: "120px"
     };

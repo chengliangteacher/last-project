@@ -116,3 +116,7 @@ export default {
   }
 };
 </script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4f2d45f10a24937bad2dda3cdfc13863ea432ea4
