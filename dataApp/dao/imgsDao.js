@@ -6,3 +6,11 @@ module.exports.addImg = async img => {
     .create(img)
     return Img._id
 }
+
+module.exports.getImg = async () => {
+  // 查找图片
+  const Img=await mongoose
+    .model("imgs")
+    .find()
+    return Img
+}

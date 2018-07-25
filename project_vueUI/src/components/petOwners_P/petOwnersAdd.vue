@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="zong1">
     <h1>新增宠主</h1>
    <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
         <el-form-item label="电话号码">
@@ -14,9 +14,20 @@
         <el-form-item label="会员卡">
             <el-input  style="width:400px" v-model="formLabelAlign.menberCard"></el-input>
         </el-form-item>
+        <!-- 添加头像 -->
         <el-form-item label="头图">
-            <el-input  style="width:400px" v-model="formLabelAlign.memberImg"></el-input>
+           <el-upload
+            :action="actions"
+            :on-success="success"
+            list-type="picture-card"
+            :on-preview="handlePictureCardPreview">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
         </el-form-item>
+
         <el-form-item label="送货地址">
             <el-input  style="width:400px" v-model="formLabelAlign.memberAdd"></el-input>
         </el-form-item>
@@ -93,11 +104,25 @@ export default {
         days: "",
         character: "",
         pets: []
-      }
+      },
+      dialogImageUrl: "",
+      dialogVisible: false,
+      actions: `/imgs/upload?type=member0`,
+      member0:"",
+      member1:""
     };
   },
   methods: {
     ...mapActions("petOwners_P", ["async_addMembers",]),
+
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    success(res) {   
+      this.formLabelAlign.memberImg = res;
+    },
+   
 
     addMembers(i){
        this.async_addMembers(i)
@@ -137,10 +162,10 @@ export default {
 };
 </script>
 <style>
-* {
+.zong1 {
   font-size: 14px;
   color: #606266;
-  line-height: 30px;
+  line-height: 25px;
 }
 </style>
 
