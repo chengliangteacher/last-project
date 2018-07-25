@@ -8,7 +8,10 @@ var dbURI = 'mongodb://localhost/dingdan';
 require('./model/imgs')
 require('./model/shops')
 require('./model/users')
-var dbURI = 'mongodb://localhost/second';
+require('./model/goods')
+require('./model/members')
+require('./model/services')
+// var dbURI = 'mongodb://localhost/second';
 
 mongoose.connect(dbURI);
 
