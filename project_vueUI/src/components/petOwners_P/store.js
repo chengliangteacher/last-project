@@ -6,9 +6,13 @@ export default ({
         maxPage: 0,
         count: 0,
         rows:[],
+        Img:[]
        
     },
     mutations: {
+        getImg(state,data){
+           state.Img=data
+        },
         getMembersByPage(state,data) {
             Object.assign(state,data);
         },
@@ -63,10 +67,10 @@ export default ({
                 }
             })
         },
-        async async_removeMembers(context,id){         
+        async async_removeMembers(context,{_id,picId}){         
             await fetch("/members/removeMembers",{
                 method: "post",
-                body: JSON.stringify({_id:id}),
+                body: JSON.stringify({_id,picId}),
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -82,6 +86,18 @@ export default ({
             })
            
         },
+        async async_getImg(context,){
+            const data = await fetch("/imgs/getImg",{
+                method: "post",
+                body: JSON.stringify(),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => res.json());
+            // console.log(data)
+            context.commit('getImg',data)
+        },
+     
     }
 
 })
