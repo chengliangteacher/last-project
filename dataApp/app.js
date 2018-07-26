@@ -7,14 +7,14 @@ require('./dao/database.js')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var orderWrapRouter = require("./routes/orderWrap")
+var imgsRouter = require('./routes/imgs')
 var goodsRouter = require('./routes/goods');
 var filesRouter = require('./routes/files');
 var goodsImgsRouter=require('./routes/goodsImgs')
 var serviceImgsRouter=require('./routes/service')
 var membersRouter=require("./routes/members")
-var orderWrapRouter =require("./routes/orderWrap")
 var shopsRouter=require('./routes/shops')
-var imgsRouter=require('./routes/imgs')
 var app = express();
 
 // view engine setup

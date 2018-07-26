@@ -1,8 +1,5 @@
-const {addImg,delImg} = require("../dao/imgDao")
-module.exports.addImg=async (imgs,type)=>{
-    return await addImg(imgs,type)
-}
+const { addImg,getImg,} = require("../dao/imgDao")
 
-module.exports.delImg=async (data)=>{
-    return await delImg(data)
+module.exports.addImg = async img => {
+  return await addImg(img)
 }

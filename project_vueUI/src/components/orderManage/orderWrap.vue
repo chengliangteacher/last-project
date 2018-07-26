@@ -1,5 +1,11 @@
  <template>
+ 
 <div>
+   <div style="margin-top: 20px">
+    <el-button @click="toggleSelection1">删除</el-button>
+    <el-button @click="toggleSelection()">取消选择</el-button>
+    <el-button @click="orderWrapUpdate">添加</el-button>
+  </div>
   <el-table
     ref="multipleTable"
     :data="state0.rows"
@@ -60,7 +66,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :page-sizes="[10, 20, 30, 40]"
-      :page-size="state0.curPage"
+      :page-size=2
       layout="total, sizes, prev, pager, next, jumper"
       :total="state0.count">
     </el-pagination>
@@ -102,17 +108,13 @@
       <el-input-number v-model="form.count"  :min="1"></el-input-number>
     </el-form-item>
     </el-form>
-        <div slot="footer" class="dialog-footer">
+    <div slot="footer" class="dialog-footer">
     <el-button @click="cancelUpate">取 消</el-button>
     <el-button type="primary" @click="addUpdate">确 定</el-button>
   </div>
      </el-dialog>
   </div>
-   <div style="margin-top: 20px">
-    <el-button @click="toggleSelection1">删除</el-button>
-    <el-button @click="toggleSelection">取消选择</el-button>
-    <el-button @click="orderWrapUpdate">添加</el-button>
-  </div>
+  
    
 </div>
 </template>
@@ -123,7 +125,6 @@
 }
 .demo-table-expand label {
   width: 90px;
-  color: #99a9bf;
 }
 .demo-table-expand .el-form-item {
   margin-right: 0;
@@ -140,14 +141,6 @@ export default {
     this.$store.dispatch("orderWrap/async_getEmpsByPage");
   },
 
-  // watch: {
-  //   curPage() {
-  //     this.$store.dispatch("orderWrap/async_getEmpsByPage");
-  //   },
-  //   eachPage() {
-  //     this.$store.dispatch("orderWrap/async_getEmpsByPage");
-  //   }
-  // },
   computed: {
     ...mapState("orderWrap", ["state1", "state2", "state3", "state4", "state0"])
   },
@@ -204,10 +197,12 @@ export default {
       })
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+       this.changeSize(val);
+       this.async_getEmpsByPage()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+       this.changePage(val);
+       this.async_getEmpsByPage()
     },
     cancelUpate() {
       this.dialogFormVisible = false;
@@ -232,12 +227,8 @@ export default {
       this.form.count=1;
     },
     ...mapMutations("orderWrap", [
-      "firstBtn",
-      "preBtn",
-      "nextBtn",
-      "lastBtn",
-      "handleSizeChange",
-      "handleCurrentChange"
+      "changeSize",
+      "changePage"
     ])
   }
 };
