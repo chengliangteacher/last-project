@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> adf384a1684bca571e73f185156ff166ff82371f
+>>>>>>> 4f2d45f10a24937bad2dda3cdfc13863ea432ea4
+>>>>>>> e15530285eb1439838fc8fdb4c900f29784f4c1c
 <template>
     <div>
    <div style="margin-top: 20px">
@@ -370,5 +380,15 @@ export default {
   }
 };
 </script>
+<<<<<<< HEAD
 
 
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> adf384a1684bca571e73f185156ff166ff82371f
+>>>>>>> 4f2d45f10a24937bad2dda3cdfc13863ea432ea4
+>>>>>>> e15530285eb1439838fc8fdb4c900f29784f4c1c
