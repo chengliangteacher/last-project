@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 const { addImg,addMembersImg,getImg,} = require("../dao/imgsDao")
 =======
@@ -9,6 +10,10 @@ const { addImg,getImg,} = require("../dao/imgDao")
 
 const { addImg,getImg,} = require("../dao/imgsDao")
 >>>>>>> e730e5b539d65abf2fdb46603e6fef073667544c
+=======
+
+const { addImg,getImg,} = require("../dao/imgDao")
+>>>>>>> 475d6294d0e71b484bb5e24b86a5726645f3ef8b
 
 module.exports.addImg = async img => {
   return await addImg(img)
@@ -16,6 +21,7 @@ module.exports.addImg = async img => {
 module.exports.getImg = async () => {
   return await getImg()
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 module.exports.addMembersImg = async img => {
   return await addMembersImg(img)
@@ -48,3 +54,5 @@ module.exports.addImg = async img => {
 =======
 >>>>>>> 40ca022d52ed89fb9342a13b3e552b0fbdf43d03
 >>>>>>> e730e5b539d65abf2fdb46603e6fef073667544c
+=======
+>>>>>>> 475d6294d0e71b484bb5e24b86a5726645f3ef8b
