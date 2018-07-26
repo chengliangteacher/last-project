@@ -18,7 +18,7 @@
             </el-form-item>
             <el-form-item label="头图" :label-width="formLabelWidth">
               <div v-for="(item) in Img" :key="item._id">
-                  <img style="width:50px" v-if="item._id==props.row.memberImg" :src="item.url" alt="wu">                 
+                  <img style="width:50px" v-if="item.url==props.row.memberImg" :src="item.url" alt="wu">                 
               </div>
             </el-form-item>
 
@@ -68,7 +68,6 @@
       </el-table-column>
     </el-table>
     <div class="block">
-      <span class="demonstration">完整功能</span>
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"

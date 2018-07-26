@@ -107,7 +107,7 @@ export default {
       },
       dialogImageUrl: "",
       dialogVisible: false,
-      actions: `/imgs/upload?type=member0`,
+      actions: `/imgs/addMembersImg?type=member0`,
       member0:"",
       member1:""
     };
