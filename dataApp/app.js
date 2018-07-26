@@ -14,7 +14,36 @@ var filesRouter = require('./routes/files');
 var goodsImgsRouter=require('./routes/goodsImgs')
 var serviceImgsRouter=require('./routes/service')
 var membersRouter=require("./routes/members")
+<<<<<<< HEAD
 var shopsRouter=require('./routes/shops')
+=======
+var orderWrapRouter =require("./routes/orderWrap")
+var shopsRouter=require('./routes/shops')
+var imgsRouter=require('./routes/imgs')
+<<<<<<< HEAD
+=======
+>>>>>>> e15530285eb1439838fc8fdb4c900f29784f4c1c
+
+var goodsRouter = require('./routes/goods');
+var filesRouter = require('./routes/files');
+var goodsImgsRouter=require('./routes/goodsImgs');
+var serviceImgsRouter=require('./routes/service');
+var membersRouter=require("./routes/members");
+var orderWrapRouter =require("./routes/orderWrap");
+var shopsRouter=require('./routes/shops');
+var imgsRouter=require('./routes/imgs');
+
+<<<<<<< HEAD
+// var orderWrapRouter =require("./routes/orderWrap")
+// var shopsRouter=require('./routes/shops')
+// var imgsRouter=require('./routes/imgs')
+=======
+var orderWrapRouter =require("./routes/orderWrap")
+var shopsRouter=require('./routes/shops')
+var imgsRouter=require('./routes/imgs')
+>>>>>>> e15530285eb1439838fc8fdb4c900f29784f4c1c
+>>>>>>> 963b2da440194f32cff45852b10761477ed967d2
+>>>>>>> 40ca022d52ed89fb9342a13b3e552b0fbdf43d03
 var app = express();
 
 // view engine setup

@@ -29,6 +29,7 @@ export default({
                 method: "post",
                 body: JSON.stringify({
                     _id:goodsId,
+                    imgId,
                 }),
                 headers: {
                     "Content-Type": "application/json"
@@ -36,17 +37,17 @@ export default({
             }).then(res => {
                 return res.json();
             });
-            await fetch("/goodsImgs/delImg", {
-                method: "post",
-                body: JSON.stringify({
-                    goodsId,imgId
-                }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(res => {
-                return res.json();
-            });
+            // await fetch("/goodsImgs/delImg", {
+            //     method: "post",
+            //     body: JSON.stringify({
+            //         goodsId,imgId
+            //     }),
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     }
+            // }).then(res => {
+            //     return res.json();
+            // });
         },
         async async_getGoods(context) {
             const data = await fetch("/goods/getGoods", {
