@@ -126,7 +126,6 @@ module.exports.deleteshops = async ({
     const shoplicImgurl=deleshoplicImg.map(({url})=>{
         return url
     })
-    console.log(shopImgurl,shoplicImgurl)
     const {unlink}=fs
     shopImgurl.forEach(async (item)=>{
         console.log('shopImgurl')
@@ -175,6 +174,7 @@ module.exports.modefiyshops = async ({
     })
     const {unlink}=fs
    if(shopLicenceImg!=''){
+       console.log(data.shopLicenceImg.url)
        await mongoose.model('imgs').remove({_id:data.shopLicenceImg._id})
        await unlink("public"+data.shopLicenceImg.url)
    }

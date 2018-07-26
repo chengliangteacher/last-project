@@ -28,6 +28,7 @@ export default({
                 method: "post",
                 body: JSON.stringify({
                     _id:servicesId,
+                    imgId,
                 }),
                 headers: {
                     "Content-Type": "application/json"
@@ -35,17 +36,17 @@ export default({
             }).then(res => {
                 return res.json();
             });
-            await fetch("/goodsImgs/delImg", {
-                method: "post",
-                body: JSON.stringify({
-                    servicesId,imgId
-                }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(res => {
-                return res.json();
-            });
+            // await fetch("/goodsImgs/delImg", {
+            //     method: "post",
+            //     body: JSON.stringify({
+            //         servicesId,imgId
+            //     }),
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     }
+            // }).then(res => {
+            //     return res.json();
+            // });
         },
         async async_getService(context) {
             const data = await fetch("/service/getService", {
@@ -64,7 +65,7 @@ export default({
             context.commit('getService', data)
         },
 
-        async async_addService(context,{serviceName,serviceType,serviceSchedule,serviceCanFor,serviceDetial,serviceTime,serviceLevel,servicePrice,serviceImg}) {
+        async async_addService(context,{serviceName,serviceType,serviceSchedule,serviceCanFor,serviceDetial,serviceTime,serviceLevel,servicePrice,serviceImg,usersId}) {
             await fetch("/service/addService", {
                 method: "post",
                 body: JSON.stringify({
@@ -77,7 +78,7 @@ export default({
                     serviceLevel,
                     servicePrice,
                     serviceImg,
-                    usersId:'5b55db78d54e387d24bc9386',
+                    usersId,
                 }),
                 headers: {
                     "Content-Type": "application/json"

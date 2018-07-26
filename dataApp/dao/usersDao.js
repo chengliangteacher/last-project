@@ -1,12 +1,16 @@
 var mongoose = require("mongoose")
 
 module.exports.adduser = async (users) => {
+    console.log(users)
     return await mongoose
         .model('users')
         .create(users)
 };
 
-module.exports.getuser = async ({ curPage, eachPage }) => {
+module.exports.getuser = async ({
+    curPage,
+    eachPage
+}) => {
     const usersmodel = mongoose.model("users")
     const count = await usersmodel.count()
 
@@ -28,11 +32,22 @@ module.exports.getuser = async ({ curPage, eachPage }) => {
     }
 };
 
-module.exports.remuser = async ({ _id }) => {
-    return await mongoose
-        .model('users')
+module.exports.remuser = async ({
+    _id
+}) => {
+    const usersmodel = await mongoose.model('users').find({_id})
+    const shopsarr=usersmodel.shops
+    const goodsarr=usersmodel.goods
+    const servicesarr=usersmodel.services
+    await mongoose.model('shops').remove({_id:shopsarr})
+    await mongoose.model('goods').remove({_id:goodsarr})
+    await mongoose.model('services').remove({_id:servicesarr})
+    return await
+    usersmodel
         .find()
-        .remove({ _id })
+        .remove({
+            _id
+        })
 };
 
 module.exports.alteruser = async ({
@@ -42,9 +57,12 @@ module.exports.alteruser = async ({
     userMail,
     userType,
     userStatus,
-    _id }) => {
+    _id
+}) => {
     return await mongoose.model('users')
-        .update({ _id }, {
+        .update({
+            _id
+        }, {
             userAcount,
             userPwd,
             userPhone,
@@ -53,3 +71,21 @@ module.exports.alteruser = async ({
             userStatus
         })
 };
+
+
+module.exports.useryan = async ({
+    form
+}) => {
+    let usersmodel = mongoose.model('users')
+    const isbool = await usersmodel.find({
+        userPwd: form.userPwd,
+        userAcount: form.userAcount,
+        userType: form.userType
+    })
+    if (isbool.length !== 0) {
+        return isbool
+    } else {
+        return false
+    }
+
+}

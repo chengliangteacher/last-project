@@ -5,22 +5,22 @@
       <el-dialog title="增加用户" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="用户名" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userAcount" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userAcount" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="密码" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userPwd" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userPwd" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="联系方式" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userPhone" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userPhone" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="邮箱" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userMail" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userMail" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="用户类型" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userType" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userType" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="用户状态" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userStatus" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userStatus" auto-complete="off"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -31,22 +31,22 @@
       <el-dialog title="修改用户" :visible.sync="dialogFormVisible1">
         <el-form :model="form">
           <el-form-item label="用户名" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userAcount" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userAcount" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="密码" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userPwd" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userPwd" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="联系方式" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userPhone" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userPhone" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="邮箱" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userMail" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userMail" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="用户类型" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userType" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userType" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="用户状态" :label-width="formLabelWidth">
-            <el-input style="width:500px" v-model="form.userStatus" auto-complete="off"></el-input>
+            <el-input style="width:80%" v-model="form.userStatus" auto-complete="off"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -213,26 +213,12 @@ export default {
       });
       this.dialogFormVisible1 = false;
     },
-
-    handleSizeChange(val) {
-      this.eachPage = val;
-      this.users();
-      // console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      this.curPage = val;
-      this.users();
-      // console.log(`当前页: ${val}`);
-    }
   }
 };
 </script>
 
 <style>
-*{
-  margin: 0;
-  padding: 0;
-}
+
 .block {
   background-color: #ccc;
   width: 50%;
@@ -240,8 +226,5 @@ export default {
   margin: 30px auto;
   text-align: center;
   border-radius: 5px;
-}
-.el-card__body{
-  background-color: #6cc;
 }
 </style>
