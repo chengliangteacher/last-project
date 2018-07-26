@@ -5,7 +5,7 @@ const {
 	uploadFile
 } = require('../util/upload')
 
-const { addImg } = require("../service/imgService")
+const { addImg } = require("../service/imgservice")
 
 router.post('/upload', async function (req, res, next) {
 	// 上传文件事件 
