@@ -48,21 +48,3 @@ var UserSchema = new Schema({
 });
 
 mongoose.model("users", UserSchema, "users");
-
-// var arr = [];
-// phone = Math.floor(Math.random() * 100000);
-// for (var i = 1; i < 6; i++) {
-//     arr.push({
-//         userAcount: 'zhang' + i,
-//         // 密码
-//         userPwd: 12345 * i,
-//         // 手机号
-//         userPhone: '158' + phone + i,
-//         // 邮箱
-// 		userMail: i + '@163.com',
-// 		// 用户类型
-// 		userType:"门店管理员"
-//     })
-// }
-// db.users.insert(arr);
-// db.users.find();

@@ -2,72 +2,85 @@
     <div>
         <div class="teloel">
             <!-- <el-card class="box-card user1"> -->
-               <h1 style="padding-left: 10%; margin: 30px;color: rgb(190, 211, 113);font-size:90px;">注册</h1>
-                <el-form status-icon ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-                    <el-form-item label="用户名">
+               <h1 style="padding-left: 10%; margin: 30px;color: rgb(190, 211, 113);font-size:50px;">注册</h1>
+              <el-form :model="form" status-icon :rules="rules2" ref="form" label-width="100px" class="demo-ruleForm">
+                    <el-form-item label="用户名" prop='userAcount'>
                         <el-input 
-                        style="width:25%"
+                        style="width:22%"
                             placeholder="请输入用户名"
-                            maxlength="8" 
-                            v-model="user" 
+                            v-model="form.userAcount" 
                             clearable
                         ></el-input>
                     </el-form-item>
 
                     <el-form-item label="密码" prop="pass">
                         <el-input 
-                        style="width:25%"
+                        style="width:22%"
                             placeholder="请输入密码" 
-                            maxlength="12" 
                             type="password" 
-                            v-model="pass" 
-                            auto-complete="off" 
-                            clearable max="5"
-                        ></el-input>
-                    </el-form-item>
-
-                    <el-form-item label="确认密码" prop="pass">
-                        <el-input 
-                        style="width:25%"
-                            type="password" 
-                            placeholder="请确认密码" 
-                            maxlength="12" 
-                            v-model="pass1" 
+                            v-model="form.userPwd" 
+                            maxlength="10" 
+                            minlength='6'
                             auto-complete="off" 
                             clearable
                         ></el-input>
                     </el-form-item>
 
-                    <el-form-item label="手机号码">
+                    <el-form-item label="确认密码" prop="checkPass">
                         <el-input 
-                        style="width:25%"
+                        style="width:22%"
+                            type="password" 
+                            placeholder="请确认密码" 
+                            v-model="form.userPwdaga" 
+                            auto-complete="off" 
+                            clearable
+                        ></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="邮箱"  
+                    prop="userMail"
+                      :rules="[
+                       { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+                      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+                       ]">
+                        <el-input 
+                        style="width:22%"
+                            placeholder="请输入邮箱"  
+                            v-model="form.userMail"
+                            clearable
+                        ></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="手机号码" prop='userPhone'>
+                        <el-input 
+                        style="width:22%"
                             placeholder="请输入手机号" 
                             maxlength="11"
-                            v-model="phone"
+                            v-model="form.userPhone"
                             clearable
                             
                         ></el-input>
                     </el-form-item>
 
-                    <el-form-item label="姓名">
+                    <el-form-item label="姓名" prop='userName'>
                         <el-input 
-                        style="width:25%"
+                        style="width:22%"
                             placeholder="请输入姓名" 
                             maxlength="5" 
-                            v-model="name"
+                            v-model="form.userName"
                             clearable
                         ></el-input>
                     </el-form-item>
 
-                    <el-form-item label="注册权限:" style="margin-left:5%;">
-                        <el-radio-group v-model="type">
+                    <el-form-item label="注册权限:" style="margin-left:5%;" prop='userType'>
+                        <el-radio-group v-model="form.userType">
                             <el-radio label="门店管理员"></el-radio>
                             <el-radio label="平台管理员"></el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item style="margin-left:4%;">
-                        <el-button type="primary" >立即注册</el-button>
-                        <el-button  @click="reg">取消注册</el-button>
+                        <el-button type="primary" @click="reg(form)">立即注册</el-button>
+                        <el-button @click="returnlogin" >返回登陆</el-button>
                     </el-form-item>
                 </el-form>
             <!-- </el-card> -->
@@ -78,84 +91,124 @@
 <script>
 export default {
   data() {
-      this.phone = (value) => {
-        if (value === '') {
-          callback(new Error('手机号不可为空'));
-        } else {
-          if (value !== '') { 
-            var reg=/^1[3456789]\d{9}$/;
-            if(!reg.test(value)){
-              callback(new Error('请输入有效的手机号码'));
-            }
-          }
-          callback();
+    var validatePass = (rule, value, callback) => {
+      if (this.form.userPwd === "") {
+        callback(new Error("请输入密码"));
+      } else if (
+        this.form.userPwd.length < 6 ||
+        this.form.userPwd.length >= 10
+      ) {
+        callback(new Error("6-10位之间"));
+      } else {
+        if (this.form.userPwdaga !== "") {
+          this.$refs.form.validateField("checkPass");
         }
-      };
+        callback();
+      }
+    };
+
+    var validatePass2 = (rule, value, callback) => {
+      if (this.form.userPwdaga === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (this.form.userPwdaga !== this.form.userPwd) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
+
+    var checkPhone = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("手机号不能为空"));
+      } else {
+        const reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
+        if (reg.test(value)) {
+          callback();
+        } else {
+          return callback(new Error("请输入正确的手机号"));
+        }
+      }
+    };
+
     return {
-      user: "",
-      pass: "",
-      type: "",
-      pass1: "",
-      phone: "",
-      name: ""
+      form: {
+        userAcount: "",
+        userPwdaga: "",
+        userPwd: "",
+        userPhone: "",
+        userMail: "",
+        userName: "",
+        userType: "",
+        userStatus:'可用',
+      },
+      rules2: {
+        pass: [
+          {
+            required: true,
+            validator: validatePass,
+            trigger: ["blur", "change"]
+          }
+        ],
+        checkPass: [
+          {
+            required: true,
+            validator: validatePass2,
+            trigger: ["blur", "change"]
+          }
+        ],
+        userAcount: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          {
+            min: 6,
+            max: 10,
+            message: "长度在 6 到 10 个字符",
+            trigger: ["blur", "change"]
+          }
+        ],
+        userPhone: [
+          { required: true, validator: checkPhone, trigger: ["blur", "change"] }
+        ],
+        userName: [{ required: true, message: "请输入姓名" }],
+        userType:[{ required: true }]
+      }
     };
   },
   methods: {
-    async btn() {
-    
-      if (
-        this.user != "" &&
-        this.pass != "" &&
-        this.type != "" &&
-        this.pass1 != "" &&
-        this.phone != "" &&
-        this.name != ""
-      ) {
-        if (this.pass === this.pass1) {
-          const data = await fetch("/user/register", {
-            method: "post",
-            body: JSON.stringify({
-              userAcount: this.user, //账号
-              userPwd: this.pass, //密码
-              userPhone: this.phone, //手机
-              userName: this.name, //姓名
-              userType: this.type //注册类型
-            }),
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }).then(res => res.json());
-          if (data == true) {
-            this.$alert("注册成功！", "提示", {
-              confirmButtonText: "确定",
-              callback: action => {
-                this.$router.push(
-                  `/login/${this.user}/${this.pass}/${this.type}`
-                );
-              }
-            });
-          } else {
-            this.$alert("注册失败，账号已被注册", "警告", {
-              confirmButtonText: "确定"
-            });
+     reg(form) {
+      this.$refs.form.validate(async valid => {
+        if (valid) {
+          console.log('true')
+          if (this.form.userType !== "") {
+            console.log('ininin')
+            const data = await fetch("/users/adduser", {
+              method: "post",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                ...this.form
+              })
+            }).then(res => res.json());
+            console.log(data)
           }
         } else {
-          alert("两次密码入不一致");
+          console.log("error submit!!");
+          return false;
         }
-      } else {
-        this.alerts();
-      }
-    },
-
-    reg() {
+      });
+      sessionStorage.userAcount=this.form.userAcount
+      sessionStorage.userType=this.form.userType
       this.$router.push("/login");
     },
-
-    alerts() {
-      this.$alert("输入错误", "提示", {
-        confirmButtonText: "确定"
-      });
+    returnlogin(){
+      this.$router.push("/login");
     }
+  },
+
+  alerts() {
+    this.$alert("输入错误", "提示", {
+      confirmButtonText: "确定"
+    });
   }
 };
 </script>

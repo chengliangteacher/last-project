@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-let { adduser, getuser, remuser,alteruser } = require('../service/userService.js')
+let { adduser, getuser, remuser,alteruser,useryan } = require('../service/userService.js')
 
 router.post('/users', async function (req, res, next) {
     res.send(await getuser(req.body))
@@ -17,8 +17,12 @@ router.post('/adduser', async function (req, res, next) {
 });
 
 router.post('/alteruser', async function (req, res, next) {
-    console.log(req.body)
     res.send(await alteruser(req.body))
+});
+
+//验证
+router.post('/useryan', async function (req, res, next) {
+    res.send(await useryan(req.body))
 });
 
 module.exports = router;

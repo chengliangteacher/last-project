@@ -5,9 +5,9 @@ const {
 	uploadFile
 } = require('../util/upload')
 
-const { addImg,getImg,} = require("../service/imgsService")
+const { addImg,getImg,} = require("../service/imgservice")
 
-router.post('/upload', async function (req, res, next) {
+router.post('/upload1', async function (req, res, next) {
 	const {type}=req.query
 	// 上传文件事件
 	const { success, data } = await uploadFile(req, res, {

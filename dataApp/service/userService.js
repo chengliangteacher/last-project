@@ -1,4 +1,4 @@
-let { adduser, getuser, remuser,alteruser } = require('../dao/usersDao.js')
+let { adduser, getuser, remuser,alteruser,useryan } = require('../dao/usersDao.js')
 
 module.exports.getuser = async (users) => {
     return await getuser(users)
@@ -15,3 +15,8 @@ module.exports.adduser = async (users) => {
 module.exports.alteruser = async (users) => {
     return await alteruser(users)
 }
+
+module.exports.useryan = async (users) => {
+    return await useryan(users)
+}
+
