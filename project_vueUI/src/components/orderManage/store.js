@@ -38,39 +38,38 @@ export default ({
         servicesEmpsByPage(state,data){
             state.state4=data
         },
-        firstBtn(state) {
-            state.curPage = 1
+        // firstBtn(state) {
+        //     state.state0.curPage = 1
+        // },
+        // preBtn(state) {
+        //     if (state.curPage <= 1) {
+        //         state.curPage = 1;
+        //     } else {
+        //         state.curPage--
+        //     }
+        // },
+        // nextBtn(state) {
+        //     if (state.curPage < state.maxPage) {
+        //         state.curPage++;
+        //     } else {
+        //         state.curPage = state.maxPage
+        //     }
+        // },
+        // lastBtn(state) {
+        //     state.curPage = state.maxPage
+        // },
+        changeSize(state, val) {
+                state.state0.eachPage = val
         },
-        preBtn(state) {
-            if (state.curPage <= 1) {
-                state.curPage = 1;
-            } else {
-                state.curPage--
-            }
-        },
-        nextBtn(state) {
-            if (state.curPage < state.maxPage) {
-                state.curPage++;
-            } else {
-                state.curPage = state.maxPage
-            }
-        },
-        lastBtn(state) {
-            state.curPage = state.maxPage
-        },
-        handleSizeChange(state, val) {
-            state.curPage = 1,
-                state.eachPage = val
-        },
-        handleCurrentChange(state, val) {
-            state.curPage = val
+        changePage(state, val) {
+            state.state0.curPage = val
         }
     },
     actions: {
         async async_getEmpsByPage(context) {
             const data = await fetch("/orderWrap/getEmpsByPage", {
                 method: "post",
-                body: JSON.stringify({ curPage: context.state.curPage, eachPage: context.state.eachPage }),
+                body: JSON.stringify({ curPage: context.state.state0.curPage, eachPage: context.state.state0.eachPage }),
                 headers: {
                     "Content-Type": "application/json"
                 }

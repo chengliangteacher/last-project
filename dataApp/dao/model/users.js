@@ -30,7 +30,7 @@ var UserSchema = new Schema({
 	userStatus: {
 		type: String
 	},
-	//对的的门店
+	//对应的的门店
 	shops: [{
 		type: Schema.Types.ObjectId,
 		ref: 'shops'
