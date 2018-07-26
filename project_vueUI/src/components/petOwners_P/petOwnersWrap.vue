@@ -18,7 +18,7 @@
             </el-form-item>
             <el-form-item label="头图" :label-width="formLabelWidth">
               <div v-for="(item) in Img" :key="item._id">
-                  <img style="width:50px" v-if="item.url==props.row.memberImg" :src="item.url" alt="wu">                 
+                  <img style="width:50px" v-if="item.url==props.row.memberImg.url" :src="item.url" alt="wu">                 
               </div>
             </el-form-item>
 
@@ -97,7 +97,7 @@
           <el-input v-model="form.menberCard" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="头图" :label-width="formLabelWidth">
-          <el-input v-model="form.memberImg" auto-complete="off"></el-input>
+          <el-input v-model="form.memberImg.url" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="送货地址" :label-width="formLabelWidth">
           <el-input v-model="form.memberAdd" auto-complete="off"></el-input>
@@ -242,7 +242,7 @@ export default {
       });
     },
     handleDelete(row) {
-         this.async_removeMembers({_id:row._id,picId:row.memberImg});
+         this.async_removeMembers({_id:row._id,picId:row.memberImg._id});
       this.$store.dispatch("petOwners_P/async_getMembersByPage");
     },
     handleUpdate(row) {
@@ -268,7 +268,7 @@ export default {
         memberAcount: "",
         memberName: "",
         menberCard: "",
-        memberImg: "",
+        memberImg: {},
         memberAdd: "",
         memberArea: "",
         memberPoint: "",

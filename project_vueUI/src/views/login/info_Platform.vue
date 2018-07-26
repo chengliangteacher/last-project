@@ -3,15 +3,17 @@
         <div class='coming'>
             <span>{{time}} {{username}} 欢迎您 | 门店管理员</span>
         </div>
-        <img src="../../../public/img/3976678470985158471.jpg" class="headerImg" />
+        <img src="../../../public/img/3976678470985158471.png" class="headerImg" />
         <div class="elList">
             <el-menu router  class="el-menu-vertical-demo"
-                            background-color="#9bca62"
+                            background-color="rgba(190, 152, 110, 0.6)"
                             text-color="#fff"
                             active-text-color="#4a6f31">
                  <el-menu-item index="/info_Platform/messageWrap_P">
                     <i class="el-icon-message"></i>
-                    <span slot="title">消息提示</span>
+                        <el-badge :value="data.total||0" class="item">
+                           <el-button type='text' size="small" style="color:white;font-size:15px;margin-top:-20px">消息提示</el-button>
+                        </el-badge>
                 </el-menu-item>
                 <el-menu-item index="/info_Platform/merchantsWrap_P">
                     <i class="el-icon-tickets"></i>
@@ -27,20 +29,29 @@
                 </el-menu-item>
             </el-menu>
         </div>
-        <el-card class="box_card"><router-view></router-view></el-card>
+        <el-card class="box_card" style=" background: rgba(241, 241, 241, 0.5);min-height:900px"><router-view></router-view></el-card>
     </div>
 </template>
 
 <script>
+import {mapActions, mapState} from 'vuex'
 export default {
   data() {
     return {
       time: new Date().toLocaleString(),
-      username:''
+      username:'',
+      count:'',
     }
   },
   created(){
-     this.username=localStorage.username='程亮'
+    this.username=localStorage.username||'程亮'
+    this.$store.dispatch('shops/initshopdata',{type:'申请中'})
+  },
+  methods:{
+    ...mapActions('shops',['initshopdata']),
+  },
+  computed:{
+    ...mapState('shops',['data'])
   }
 };
 </script>
@@ -69,7 +80,7 @@ export default {
 
 .el-menu-vertical-demo {
   width: 100%;
-  height: 1100px;
+  height: 900px;
   display: inline-block;
 }
 .box_card {
@@ -77,5 +88,9 @@ export default {
   margin: 0px auto;
   min-height: 500px;
   float: right;
+}
+.item {
+  margin-top:13px;
+  margin-right: 40px;
 }
 </style>

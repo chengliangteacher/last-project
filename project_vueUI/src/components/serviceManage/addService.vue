@@ -12,7 +12,7 @@
   </el-form-item>
     <el-form-item label="排期">
         <el-col :span="6">
-            <el-date-picker value-format="yyyy-MM-dd HH:mm" type="datetime" v-model="serviceSchedule"  placeholder="选择时间" style="width: 100%;"></el-date-picker>
+            <el-date-picker value-format="yyyy-MM-dd HH:mm" type="datetime" v-model="serviceSchedule"  placeholder="选择时间" style="width:62%;"></el-date-picker>
         </el-col>
   </el-form-item>
     <el-form-item label="适用规格" style="width:340px;">
@@ -50,40 +50,40 @@
         </el-dialog>
     </el-form-item>
     <el-form-item>
-        <el-button @click="async_addService({serviceName,serviceType,serviceSchedule,serviceCanFor,serviceDetial,serviceTime,serviceLevel,servicePrice,serviceImg,usersId})" type="primary">立即创建</el-button>
-        <el-button>取消</el-button>
+    <el-button @click="goList();async_addService({serviceName,serviceType,serviceSchedule,serviceCanFor,serviceDetial,serviceTime,serviceLevel,servicePrice,serviceImg,usersId})" type="primary">立即创建</el-button>
+        <el-button @click="goList">取消</el-button>
     </el-form-item>
 </el-form>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
 export default {
-    created(){
-        localStorage.usersId = "5b584965b4bb1641f85483cd";
+  data() {
+    return {
+      serviceName: "美美哒",
+      serviceType: "护理",
+      serviceSchedule: "",
+      serviceCanFor: "成狗",
+      serviceDetial: "大",
+      serviceTime: "30分钟",
+      serviceLevel: "普通",
+      servicePrice: "34",
+      serviceImg: "",
+      usersId: localStorage.usersId,
+      dialogImageUrl: "",
+      dialogVisible: false
+    };
+  },
+  methods: {
+    ...mapActions("serviceManage", ["async_addService"]),
+    getImgsId(response) {
+      this.serviceImg = response.imgId;
     },
-     data(){
-        return{
-            serviceName:'美美哒',
-            serviceType:'护理',
-            serviceSchedule:'',
-            serviceCanFor:'成狗',
-            serviceDetial:'大',
-            serviceTime:'30分钟',
-            serviceLevel:'普通',
-            servicePrice:'34',
-            serviceImg:'',
-            usersId:localStorage.usersId,
-            dialogImageUrl: '',
-            dialogVisible: false,
-        }
-    },
-    methods: {
-        ...mapActions("serviceManage",["async_addService"]),
-        getImgsId(response) {
-            this.serviceImg=response.imgId;
-        }
+    goList() {
+      this.$router.push("/info_Merchants/serviceWrap");
     }
-}
+  }
+};
 </script>
 

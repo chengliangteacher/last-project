@@ -49,6 +49,10 @@ var ShopSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'users'
 	},
+	type:{
+		type:String,
+		default:'申请中'
+	}
 });
 
 mongoose.model("shops", ShopSchema, "shops");

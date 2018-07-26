@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div class="teloel">
+        <div class="teloel"  style="width:26%;height:600px;margin:30px;">
             <!-- <el-card class="box-card user1"> -->
-               <h1 style="padding-left: 10%; margin: 30px;color: rgb(190, 211, 113);font-size:50px;">注册</h1>
+              <h1  style="width:150px;margin:30px auto;color: rgb(230, 191, 113);font-size:50px;">注册</h1>
               <el-form :model="form" status-icon :rules="rules2" ref="form" label-width="100px" class="demo-ruleForm">
                     <el-form-item label="用户名" prop='userAcount'>
                         <el-input 
-                        style="width:22%"
+                        style="width:90%"
                             placeholder="请输入用户名"
                             v-model="form.userAcount" 
                             clearable
@@ -15,7 +15,7 @@
 
                     <el-form-item label="密码" prop="pass">
                         <el-input 
-                        style="width:22%"
+                        style="width:90%"
                             placeholder="请输入密码" 
                             type="password" 
                             v-model="form.userPwd" 
@@ -28,7 +28,7 @@
 
                     <el-form-item label="确认密码" prop="checkPass">
                         <el-input 
-                        style="width:22%"
+                        style="width:90%"
                             type="password" 
                             placeholder="请确认密码" 
                             v-model="form.userPwdaga" 
@@ -44,7 +44,7 @@
                       { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
                        ]">
                         <el-input 
-                        style="width:22%"
+                        style="width:90%"
                             placeholder="请输入邮箱"  
                             v-model="form.userMail"
                             clearable
@@ -53,7 +53,7 @@
 
                     <el-form-item label="手机号码" prop='userPhone'>
                         <el-input 
-                        style="width:22%"
+                        style="width:90%"
                             placeholder="请输入手机号" 
                             maxlength="11"
                             v-model="form.userPhone"
@@ -64,7 +64,7 @@
 
                     <el-form-item label="姓名" prop='userName'>
                         <el-input 
-                        style="width:22%"
+                        style="width:90%"
                             placeholder="请输入姓名" 
                             maxlength="5" 
                             v-model="form.userName"
@@ -177,10 +177,8 @@ export default {
      reg(form) {
       this.$refs.form.validate(async valid => {
         if (valid) {
-          console.log('true')
           if (this.form.userType !== "") {
-            console.log('ininin')
-            const data = await fetch("/users/adduser", {
+              await fetch("/users/adduser", {
               method: "post",
               headers: {
                 "Content-Type": "application/json"
@@ -189,10 +187,8 @@ export default {
                 ...this.form
               })
             }).then(res => res.json());
-            console.log(data)
           }
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -221,18 +217,16 @@ export default {
 }
 
 body {
-  background-image: url("/img/ala1.png");
+  background-image: url("/img/f3f2676b4ec53db5db3def0c8ad432cb.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
 }
 
 .teloel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-
+  background: rgba(255, 255, 255, 0.3)
+}
+.el-form{
   width: 100%;
-  height: 100%;
+  display:inline-block;
 }
 </style>

@@ -1,17 +1,17 @@
 <template>
-  <div class="telogs">
-    <div class="teloel">
-        <h1 style="padding-left: 9%; margin: 30px;color: rgb(190, 211, 113);font-size:50px;">宠物邦</h1>
+  <div class="telogs" style="width:100%">
+    <div class="teloel" style="width:26%;height:500px;margin:30px;">
+        <h1 style="width:150px;margin:30px auto;color: rgb(230, 191, 113);font-size:50px;">宠物邦</h1>
         <el-form status-icon ref="form" label-width="100px" >
           <el-form-item label="用户名">
-            <el-input placeholder="请输入用户名" v-model="form.userAcount" clearable  style="width:20%">
+            <el-input style="width:90%;" placeholder="请输入用户名" v-model="form.userAcount" clearable >
             </el-input>
           </el-form-item>
           <el-form-item label="密码">
-            <el-input placeholder="请输入密码" type="password" v-model="form.userPwd" clearable style="width:20%">
+            <el-input placeholder="请输入密码" type="password" v-model="form.userPwd" clearable style="width:90%">
             </el-input>
           </el-form-item>
-          <el-form-item style="padding-left: 5%" label="登录类型:"> 
+          <el-form-item style="padding-left:5%" label="登录类型:"> 
             <el-radio-group v-model="form.userType">
               <el-radio label="平台管理员"></el-radio>
               <el-radio label="门店管理员"></el-radio>
@@ -23,7 +23,6 @@
           </el-form-item>
         </el-form>
     </div>
-
   </div>
 </template>
   <script>
@@ -55,7 +54,9 @@ export default {
           if(this.form.userType==='平台管理员'){
             this.$router.push("/info_Platform")
           }else{
-            localStorage.usersId=isbool[0]._id
+            console.log(isbool[0]._id)
+             localStorage.usersId=isbool[0]._id
+             localStorage.usersName=isbool[0].userAcount
                this.$router.push("/Info_Merchants")
           }
         }else{
@@ -96,17 +97,16 @@ export default {
   margin: 100px auto;
 }
 body {
-  background-image: url("/img/ala1.png");
+  background-image: url("/img/f3f2676b4ec53db5db3def0c8ad432cb.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
 }
 .teloel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  /* background: rgba(0, 0, 0, 0.2); */
-  width: 100%;
-  height: 100%;
+  background: rgba(255, 255, 255, 0.3)
 }
+.el-form{
+  width: 100%;
+  display:inline-block;
+}
+
 </style>

@@ -151,7 +151,14 @@ export default {
       }).then(res => res.json());
       Object.assign(this, data);
     },
-
+    handleSizeChange (val){
+        this.eachPage=val
+        this.users()
+    },
+    handleCurrentChange(val){
+      this.curPage=val
+      this.users()
+    },
     async remuser(_id) {
       await fetch("/users/remuser", {
         method: "post",
@@ -193,7 +200,7 @@ export default {
       this.form.userStatus = row.userStatus;
       this.form._id = row._id;
     },
-    async alteruser1(index, row) {
+    async alteruser1() {
       await fetch("/users/alteruser", {
         method: "post",
         body: JSON.stringify({

@@ -25,7 +25,7 @@ export default({
 
     actions: {
         async async_handleDelete(context,{goodsId,imgId}){
-            const data = await fetch("/goods/delGoods", {
+             await fetch("/goods/delGoods", {
                 method: "post",
                 body: JSON.stringify({
                     _id:goodsId,
@@ -37,17 +37,6 @@ export default({
             }).then(res => {
                 return res.json();
             });
-            // await fetch("/goodsImgs/delImg", {
-            //     method: "post",
-            //     body: JSON.stringify({
-            //         goodsId,imgId
-            //     }),
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     }
-            // }).then(res => {
-            //     return res.json();
-            // });
         },
         async async_getGoods(context) {
             const data = await fetch("/goods/getGoods", {
@@ -67,7 +56,7 @@ export default({
 
 
         async async_addGoods(context, {goodsName,goodsType,goodsMaterial,goodsMath,goodsCanFor,goodsOnlyFor,goodsSize,goodsTaste,goodsSpecial,goodsRegion,goodsDate,goodsTime,goodsSupplier,goodsIntro,goodsPrice,goodsImg,usersId}) {
-            const data = await fetch("/goods/addGoods", {
+             await fetch("/goods/addGoods", {
                 method: "post",
                 body: JSON.stringify({
                     goodsName,

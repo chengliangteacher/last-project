@@ -5,10 +5,11 @@ var fs=require('fs')
 module.exports.getshops = async ({
     curPage,
     count,
-    usersId
+    usersId,
+    type
 }) => {
     const shopsmodel = mongoose.model("shops")
-    const shop = await shopsmodel.find({usersId:usersId})
+    const shop = await shopsmodel.find({usersId:usersId,type:type.type})
         .populate([{
                 path: 'shopLicenceImg'
             },
@@ -18,7 +19,12 @@ module.exports.getshops = async ({
         ])
         .skip((curPage-1)*count)
         .limit(count)
-    const total = await shopsmodel.find().count()
+    var total=''
+    if(type){
+        total= await shopsmodel.find({type:type.type}).count()
+    }else{
+        total= await shopsmodel.find().count()
+    }
     return {
         shop,
         total,
@@ -29,10 +35,11 @@ module.exports.getshops = async ({
 //查询（平台管理员查询，即全部查询）
 module.exports.getshopsall = async ({
     curPage,
-    count
+    count,
+    type,
 }) => {
     const shopsmodel = mongoose.model("shops")
-    const shop = await shopsmodel.find()
+    const shop = await shopsmodel.find({type,})
         .populate([{
                 path: 'shopLicenceImg'
             },
@@ -62,7 +69,7 @@ module.exports.addshops = async ({
         usersId
     } = await shopsmodel.create({ ...data,
         shopLicenceImg: shopLicenceImg,
-        shopImg: shopImg
+        shopImg: shopImg,type:'申请中'
     })
     await mongoose.model('imgs').update({
         _id: shopLicenceImg
@@ -128,7 +135,6 @@ module.exports.deleteshops = async ({
     })
     const {unlink}=fs
     shopImgurl.forEach(async (item)=>{
-        console.log('shopImgurl')
         await unlink('public'+item)
     })
     shoplicImgurl.forEach(async (item)=>{
@@ -182,5 +188,16 @@ module.exports.modefiyshops = async ({
     await mongoose.model('imgs').remove({_id:data.shopImg._id})
     await unlink("public"+data.shopImg.url)
     }
+    return true
+}
+
+module.exports.modefiytype = async ({_id}) => {
+  await mongoose.model('shops').update({
+      _id,
+  },
+  {
+      type:'申请成功'
+  }
+)
     return true
 }

@@ -1,32 +1,39 @@
 let mongoose = require('mongoose');
 var fs = require('fs')
-module.exports.addGoods=async (data)=>{
-   let {goodsImg,_id,usersId}=await mongoose.model('goods').create(data);
-   await mongoose.model('imgs')
-   .update({
-        _id:goodsImg[0],
-    },{ 
-        goodsId:_id,
-    });
+module.exports.addGoods = async (data) => {
+    let {
+        goodsImg,
+        _id,
+        usersId
+    } = await mongoose.model('goods').create(data);
+    await mongoose.model('imgs')
+        .update({
+            _id: goodsImg[0],
+        }, {
+            goodsId: _id,
+        });
 
     await mongoose.model('imgs')
-    .update({
-        _id:goodsImg[1],
-    },{ 
-        goodsId:_id,
-    });
+        .update({
+            _id: goodsImg[1],
+        }, {
+            goodsId: _id,
+        });
 
     return await mongoose.model('users')
-    .update({
-         _id:usersId
-     },{ 
-        $push:{
-            goods:_id,
-        }
-     });
+        .update({
+            _id: usersId
+        }, {
+            $push: {
+                goods: _id,
+            }
+        });
 }
 
-module.exports.getGoods=async ({curPage,eachPage})=>{
+module.exports.getGoods = async ({
+    curPage,
+    eachPage
+}) => {
     let result = {};
     page = Number(curPage);
     rows = Number(eachPage);
@@ -35,109 +42,127 @@ module.exports.getGoods=async ({curPage,eachPage})=>{
     result.rows = await data
         .find()
         .populate({
-            path:'goodsImg',
+            path: 'goodsImg',
         })
-        .sort({ _id: -1 })
+        .sort({
+            _id: -1
+        })
         .skip((page - 1) * rows)
         .limit(rows)
         .exec()
     return result;
 }
 
-module.exports.delGoods=async ({_id,imgId})=>{
-    await mongoose.model('goods').remove({_id});
-    let {unlink}=fs;
-    await imgId.forEach(item=>{
-      unlink('public'+item.url)
+module.exports.delGoods = async ({
+    _id,
+    imgId
+}) => {
+    await mongoose.model('goods').remove({
+        _id
+    });
+    let {
+        unlink
+    } = fs;
+    await imgId.forEach(item => {
+        unlink('public' + item.url)
     })
     await mongoose
-      .model("imgs")
-      .remove({goodsId:imgId[0].goodsId})
+        .model("imgs")
+        .remove({
+            goodsId: imgId[0].goodsId
+        })
 
     let data = await mongoose
-    .model("users")
-    .find({
-        goods: _id
-    })
-    let good=data[0].goods;
-    let datas= good.filter(item=>{
-        if(item!=_id){
+        .model("users")
+        .find({
+            goods: _id
+        })
+
+    let good = data[0].goods;
+    let datas = good.filter(item => {
+        if (item != _id) {
             return item;
         }
     })
+
     return await mongoose
-    .model("users")
-    .update({
-        goods: datas
-    })
+        .model("users")
+        .update({
+            _id: data[0]._id
+        }, {
+            goods: datas
+        })
 }
 
 
-module.exports.xiuGoods=async ({goods,delImg})=>{
+module.exports.xiuGoods = async ({
+    goods,
+    delImg
+}) => {
 
-    await mongoose.model('goods').update({_id:goods._id},goods);
-
-    await mongoose.model('imgs')
-    .update({
-        _id:goods.goodsImg[0]._id,
-    },{ 
-        url:goods.goodsImg[0].url,
-    });
+    await mongoose.model('goods').update({
+        _id: goods._id
+    }, goods);
 
     await mongoose.model('imgs')
-    .update({
-        _id:goods.goodsImg[1]._id,
-    },{ 
-        url:goods.goodsImg[1].url,
-    });
+        .update({
+            _id: goods.goodsImg[0]._id,
+        }, {
+            url: goods.goodsImg[0].url,
+        });
 
-    let {unlink}=fs;
-    await delImg.forEach(item=>{
-        unlink('public'+item)
+    await mongoose.model('imgs')
+        .update({
+            _id: goods.goodsImg[1]._id,
+        }, {
+            url: goods.goodsImg[1].url,
+        });
+
+    let {
+        unlink
+    } = fs;
+    await delImg.forEach(item => {
+        unlink('public' + item)
     })
     return unlink;
 }
 
 
-module.exports.findGoods = async ({ curPage = 0, eachPage = 10, title }) => {
-    console.log(curPage, eachPage, title)
+module.exports.findGoods = async ({
+    curPage = 0,
+    eachPage = 10,
+    title
+}) => {
     const result = {
-      curPage: ~~curPage,
-      eachPage: ~~eachPage,
+        curPage: ~~curPage,
+        eachPage: ~~eachPage,
     }
     // try {
-      const goodsModel = mongoose.model("goods")
-      result.total = await goodsModel.count({
-        goodsName: {
-          $regex: new RegExp(title)
-        }
-      })
-      result.rows = await
-        goodsModel.find({
+    const goodsModel = mongoose.model("goods")
+    result.total = await goodsModel.count({
         goodsName: {
             $regex: new RegExp(title)
-          }
+        }
+    })
+    result.rows = await
+    goodsModel.find({
+            goodsName: {
+                $regex: new RegExp(title)
+            }
         })
         .populate({
-            path:'goodsImg',
+            path: 'goodsImg',
         })
-        .skip((result.curPage-1)*result.eachPage)
+        .skip((result.curPage - 1) * result.eachPage)
         .limit(result.eachPage)
         .exec()
-    //   await new Promise((resolve) => {
-    //     setTimeout(() => {
-    //       resolve("")
-    //     }, 2000)
-    //   })
-      return result
-    // } catch (e) {
-    //   console.log('=============== getMovies 异常: =====================');
-    //   console.log(e);
-    //   console.log('====================================');
-    // }
-  }
+    return result
+}
 
-  module.exports.pricePai = async ({ curPage = 0, eachPage = 10 }) => {
+module.exports.pricePai = async ({
+    curPage = 0,
+    eachPage = 10
+}) => {
 
     const result = {
         curPage: ~~curPage,
@@ -147,15 +172,17 @@ module.exports.findGoods = async ({ curPage = 0, eachPage = 10, title }) => {
     const goodsModel = mongoose.model("goods")
     result.total = await goodsModel.count()
     result.rows = await
-        goodsModel
-            .find()
-            .populate({
-                path: 'goodsImg',
-            })
-            .sort({ goodsPrice: 1 })
-            .skip((result.curPage - 1) * result.eachPage)
-            .limit(result.eachPage)
-            .exec()
+    goodsModel
+        .find()
+        .populate({
+            path: 'goodsImg',
+        })
+        .sort({
+            goodsPrice: 1
+        })
+        .skip((result.curPage - 1) * result.eachPage)
+        .limit(result.eachPage)
+        .exec()
 
     return result;
 }

@@ -1,4 +1,4 @@
-var {getshops,addshops,deleteshops,modefiyshops,getshopsall} =require('../dao/shopsDao')
+var {getshops,addshops,deleteshops,modefiyshops,getshopsall,modefiytype} =require('../dao/shopsDao')
  module.exports.getshops=(async data=>{
    return await getshops(data)
 })
@@ -17,4 +17,8 @@ module.exports.modefiyshops=(async data=>{
 
 module.exports.getshopsall=(async data=>{
   return await getshopsall(data)
+})
+
+module.exports.modefiytype=(async data=>{
+  return await modefiytype(data)
 })

@@ -35,13 +35,13 @@ module.exports.getuser = async ({
 module.exports.remuser = async ({
     _id
 }) => {
-    const usersmodel = await mongoose.model('users').find({_id})
-    const shopsarr=usersmodel.shops
-    const goodsarr=usersmodel.goods
-    const servicesarr=usersmodel.services
-    await mongoose.model('shops').remove({_id:shopsarr})
-    await mongoose.model('goods').remove({_id:goodsarr})
-    await mongoose.model('services').remove({_id:servicesarr})
+    const usersmodel = mongoose.model('users')
+    // const shopsarr=usersmodel.shops
+    // const goodsarr=usersmodel.goods
+    // const servicesarr=usersmodel.services
+    // await mongoose.model('shops').remove({_id:shopsarr})
+    // await mongoose.model('goods').remove({_id:goodsarr})
+    // await mongoose.model('services').remove({_id:servicesarr})
     return await
     usersmodel
         .find()

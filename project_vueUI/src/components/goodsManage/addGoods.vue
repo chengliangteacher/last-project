@@ -1,5 +1,6 @@
 <template>
-<el-form  label-width="120px">
+<div style="overflow:hidden">
+<el-form class="addForm"  style=" height:880px;overflow-y:scroll;" label-width="120px">
   <el-form-item label="商品名称" style="width:340px;">
     <el-input v-model="goodsName" ></el-input>
   </el-form-item>
@@ -47,7 +48,7 @@
     </el-form-item>
     <el-form-item label="出厂日期">
         <el-col :span="11">
-            <el-date-picker type="date" v-model="goodsDate" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"  placeholder="请选择日期" style="width:340px;"></el-date-picker>
+            <el-date-picker type="date" v-model="goodsDate" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"  placeholder="请选择日期" style="width:62%;"></el-date-picker>
         </el-col>
     </el-form-item>
     <el-form-item label="保质期">
@@ -89,19 +90,17 @@
         </el-dialog>
     </el-form-item>
     <el-form-item>
-        <el-button type="primary" @click="async_addGoods({goodsName,goodsType,goodsMaterial,goodsMath,goodsCanFor,goodsOnlyFor,goodsSize,goodsTaste,goodsSpecial,
+        <el-button type="primary" @click="goList();async_addGoods({goodsName,goodsType,goodsMaterial,goodsMath,goodsCanFor,goodsOnlyFor,goodsSize,goodsTaste,goodsSpecial,
         goodsRegion,goodsDate,goodsTime,goodsSupplier,goodsIntro,goodsPrice,goodsImg,usersId})">立即创建</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="goList">取消</el-button>
     </el-form-item>
 </el-form>
+</div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 export default {
-  created() {
-    localStorage.usersId = "5b584965b4bb1641f85483cd";
-  },
   data() {
     return {
       goodsName: "猫粮",
@@ -120,7 +119,7 @@ export default {
       goodsIntro: "和平vkdfkdfnbfdbndflghidfkflsdfosof",
       goodsPrice: "42",
       goodsImg: [],
-      usersId:localStorage.usersId,
+      usersId: localStorage.usersId,
       dialogImageUrl: "",
       dialogVisible: false
     };
@@ -129,8 +128,16 @@ export default {
     ...mapActions("goodsManage", ["async_addGoods"]),
     getImgsId(response) {
       this.goodsImg.push(response.imgId);
+    },
+    goList() {
+      this.$router.push("/info_Merchants/goodsWrap");
     }
   }
 };
 </script>
 
+<style>
+.addForm::-webkit-scrollbar {
+  display: none;
+}
+</style>

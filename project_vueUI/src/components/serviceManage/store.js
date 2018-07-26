@@ -24,7 +24,7 @@ export default({
 
     actions: {
         async async_handleDelete(context,{servicesId,imgId}){
-            const data = await fetch("/service/delService", {
+             await fetch("/service/delService", {
                 method: "post",
                 body: JSON.stringify({
                     _id:servicesId,
@@ -36,17 +36,6 @@ export default({
             }).then(res => {
                 return res.json();
             });
-            // await fetch("/goodsImgs/delImg", {
-            //     method: "post",
-            //     body: JSON.stringify({
-            //         servicesId,imgId
-            //     }),
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     }
-            // }).then(res => {
-            //     return res.json();
-            // });
         },
         async async_getService(context) {
             const data = await fetch("/service/getService", {
@@ -61,7 +50,6 @@ export default({
             }).then(res => {
                 return res.json();
             });
-            console.log(data)
             context.commit('getService', data)
         },
 
@@ -129,7 +117,6 @@ export default({
             }).then(res => {
                 return res.json();
             });
-            console.log(data);
             context.commit('getService', data)
         },
     }

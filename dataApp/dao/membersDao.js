@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+var fs =require('fs')
 
 module.exports.getMembersByPage = async (curPage, eachPage) => {
 
@@ -32,10 +33,15 @@ module.exports.removeMembers = async (id,picId) => {
     .model("members")
     .find()
     .remove({_id:id})
-return await mongoose
+    const imgsurl=await mongoose.model('imgs').find({_id:picId})
+    const url=imgsurl[0].url
+    const {unlink}=fs
+    await unlink('public'+url)
+let pic= await mongoose
     .model("imgs")
     .find()
     .remove({_id:picId})
+    return pic
 }
 
 module.exports.xiuMembers = async ({_id,memberPhone,memberAcount,memberName,menberCard,memberImg,memberAdd,memberArea,memberPoint,pets}) => {

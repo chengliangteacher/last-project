@@ -93,7 +93,7 @@ export default {
         memberAcount: "",
         memberName: "",
         menberCard: "",
-        memberImg: "",
+        memberImg: {},
         memberAdd: "",
         memberArea: "",
         memberPoint: "",

@@ -38,26 +38,6 @@ export default ({
         servicesEmpsByPage(state,data){
             state.state4=data
         },
-        // firstBtn(state) {
-        //     state.state0.curPage = 1
-        // },
-        // preBtn(state) {
-        //     if (state.curPage <= 1) {
-        //         state.curPage = 1;
-        //     } else {
-        //         state.curPage--
-        //     }
-        // },
-        // nextBtn(state) {
-        //     if (state.curPage < state.maxPage) {
-        //         state.curPage++;
-        //     } else {
-        //         state.curPage = state.maxPage
-        //     }
-        // },
-        // lastBtn(state) {
-        //     state.curPage = state.maxPage
-        // },
         changeSize(state, val) {
                 state.state0.eachPage = val
         },

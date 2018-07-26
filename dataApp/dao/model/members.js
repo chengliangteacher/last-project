@@ -19,7 +19,7 @@ var MemberSchema = new Schema({
         type: String
     },
     // 头图
-    memberImg:{type:String},
+    memberImg:{type:Object},
     // [{
 	// 	type: Schema.Types.ObjectId,
 	// 	ref: "imgs"

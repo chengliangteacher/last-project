@@ -1,21 +1,17 @@
 <template>
     <div class="listEl">
         <div class='coming'>
-            <span>{{time}} 大兄弟 欢迎您 | 门店管理员</span>
+            <span>{{time}} <el-button type='text' style="color:rgb(210, 122, 110)" @click="tuichu">{{usersName}} </el-button> 欢迎您 | 门店管理员</span>
         </div>
-        <img src="../../../public/img/3976678470985158471.jpg" class="headerImg" />
+        <img src="../../../public/img/3976678470985158471.png" class="headerImg" />
         <div class="elList">
             <el-menu router  class="el-menu-vertical-demo" 
-                    background-color="#9bca62"
+                    background-color="rgb(190, 152, 110,.6)"
                     text-color="#fff"
                     active-text-color="#4a6f31">
                  <el-menu-item index="/info_Merchants/userWrap">
                     <i class="el-icon-tickets"></i>
                     <span slot="title">用户管理</span>
-                </el-menu-item>
-                <el-menu-item index="/info_Merchants/petWrap">
-                    <i class="el-icon-menu"></i>
-                    <span slot="title">宠物管理</span>
                 </el-menu-item>
                 <el-menu-item index="/info_Merchants/merchantsWrap">
                     <i class="el-icon-setting"></i>
@@ -47,18 +43,45 @@
                 </el-menu-item>
             </el-menu>
         </div>
-        <el-card class="box_card"><router-view></router-view></el-card>
+        <el-card class="box_card" style=" background: rgba(241, 241, 241, 0.5);min-height:900px"><router-view></router-view></el-card>
     </div>
 </template>
 
 <script>
 export default {
-    data(){
-        return{
-            time:new Date().toLocaleString(),
-        }
+  data() {
+    return {
+      time: new Date().toLocaleString(),
+      usersName: ""
+    };
+  },
+  created() {
+    this.usersName = localStorage.usersName;
+  },
+
+  methods: {
+    tuichu() {
+      this.$confirm("是否退出登录", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$router.push('/login')
+          this.$message({
+            type: "success",
+            message: "退出成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "取消退出"
+          });
+        });
     }
-}
+  }
+};
 </script>
 
 <style>
@@ -66,8 +89,8 @@ export default {
   margin: 0;
   padding: 0;
 }
-.el-submenu .el-menu-item{
-    min-width: 100px !important;
+.el-submenu .el-menu-item {
+  min-width: 100px !important;
 }
 .coming {
   position: absolute;

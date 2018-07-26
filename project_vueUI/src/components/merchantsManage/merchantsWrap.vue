@@ -245,7 +245,7 @@ export default {
         return _id;
       });
       this.deleteshops(arr);
-      this.initshopdata();
+      this.initshopdata({type:'申请成功'});
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
@@ -255,11 +255,11 @@ export default {
     },
     handleSizeChange(val) {
       this.changeSize(val);
-      this.initshopdata();
+      this.initshopdata({type:'申请成功'});
     },
     handleCurrentChange(val) {
       this.changePage(val);
-      this.initshopdata();
+      this.initshopdata({type:'申请成功'});
     },
     ...mapActions("shops", ["initshopdata", "deleteshops"]),
     ...mapMutations("shops", ["changeSize", "changePage"]),
@@ -304,7 +304,7 @@ export default {
               this.shop1 = "";
               this.modefiyForm = {};
               done();
-              this.initshopdata();
+              this.initshopdata({type:'申请成功'});
               return res.json();
             });
           } else {
@@ -345,7 +345,7 @@ export default {
               this.shop0 = "";
               this.shop1 = "";
               done();
-              this.initshopdata();
+              this.initshopdata({type:'申请成功'});
               return res.json();
             });
           } else {
@@ -361,7 +361,7 @@ export default {
     }
   },
   created() {
-    this.initshopdata();
+    this.initshopdata({type:'申请成功'});
   },
   computed: {
     ...mapState("shops", ["data"])

@@ -1,26 +1,32 @@
 let mongoose = require('mongoose');
 var fs = require('fs')
 module.exports.addService = async (data) => {
-    console.log(data)
-    let { serviceImg, _id, usersId } = await mongoose.model('services').create(data);
+    let {
+        serviceImg,
+        _id,
+        usersId
+    } = await mongoose.model('services').create(data);
     await mongoose.model('imgs')
         .update({
             _id: serviceImg,
         }, {
-                goodsId: _id,
-            });
+            goodsId: _id,
+        });
 
     return await mongoose.model('users')
         .update({
             _id: usersId
         }, {
-                $push: {
-                    services: _id,
-                }
-            });
+            $push: {
+                services: _id,
+            }
+        });
 }
 
-module.exports.getService = async ({ curPage, eachPage }) => {
+module.exports.getService = async ({
+    curPage,
+    eachPage
+}) => {
     let result = {};
     page = Number(curPage);
     rows = Number(eachPage);
@@ -31,47 +37,65 @@ module.exports.getService = async ({ curPage, eachPage }) => {
         .populate({
             path: 'serviceImg',
         })
-        .sort({ _id: -1 })
+        .sort({
+            _id: -1
+        })
         .skip((page - 1) * rows)
         .limit(rows)
         .exec()
     return result;
 }
 
-module.exports.delService = async ({ _id,imgId }) => {
-    await mongoose.model('services').remove({ _id });
-    let {unlink}=fs;
-    await imgId.forEach(item=>{
-      unlink('public'+item.url)
+module.exports.delService = async ({
+    _id,
+    imgId
+}) => {
+    await mongoose.model('services').remove({
+        _id
+    });
+    let {
+        unlink
+    } = fs;
+    await imgId.forEach(item => {
+        unlink('public' + item.url)
     })
     await mongoose
-      .model("imgs")
-      .remove({goodsId:imgId[0].goodsId})
+        .model("imgs")
+        .remove({
+            goodsId: imgId[0].goodsId
+        })
 
     let data = await mongoose
-    .model("users")
-    .find({
-        services: _id
-    })
-    let service=data[0].services;
-    let datas= service.filter(item=>{
-        if(item!=_id){
+        .model("users")
+        .find({
+            services: _id
+        })
+    let service = data[0].services;
+    let datas = service.filter(item => {
+        if (item != _id) {
             return item;
         }
     })
 
     return await mongoose
-    .model("users")
-    .update({
-        services: datas
-    })
+        .model("users")
+        .update({
+            _id: data[0]._id
+        }, {
+            services: datas
+        })
 
 }
 
 
-module.exports.xiuService = async ({ service, delImg }) => {
+module.exports.xiuService = async ({
+    service,
+    delImg
+}) => {
 
-    await mongoose.model('services').update({ _id: service._id }, service);
+    await mongoose.model('services').update({
+        _id: service._id
+    }, service);
 
     console.log(service, delImg)
 
@@ -79,15 +103,21 @@ module.exports.xiuService = async ({ service, delImg }) => {
         .update({
             _id: service.serviceImg[0]._id,
         }, {
-                url: service.serviceImg[0].url,
-            });
+            url: service.serviceImg[0].url,
+        });
 
-    let { unlink } = fs;
+    let {
+        unlink
+    } = fs;
     return await unlink('public' + delImg)
 
 }
 
-module.exports.findService = async ({ curPage = 0, eachPage = 10, title }) => {
+module.exports.findService = async ({
+    curPage = 0,
+    eachPage = 10,
+    title
+}) => {
     const result = {
         curPage: ~~curPage,
         eachPage: ~~eachPage,
@@ -100,17 +130,17 @@ module.exports.findService = async ({ curPage = 0, eachPage = 10, title }) => {
         }
     })
     result.rows = await
-        goodsModel.find({
+    goodsModel.find({
             serviceName: {
                 $regex: new RegExp(title)
             }
         })
-            .populate({
-                path: 'serviceImg',
-            })
-            .skip((result.curPage - 1) * result.eachPage)
-            .limit(result.eachPage)
-            .exec()
+        .populate({
+            path: 'serviceImg',
+        })
+        .skip((result.curPage - 1) * result.eachPage)
+        .limit(result.eachPage)
+        .exec()
     //   await new Promise((resolve) => {
     //     setTimeout(() => {
     //       resolve("")
@@ -125,7 +155,10 @@ module.exports.findService = async ({ curPage = 0, eachPage = 10, title }) => {
 }
 
 
-module.exports.pricePai = async ({ curPage = 0, eachPage = 10 }) => {
+module.exports.pricePai = async ({
+    curPage = 0,
+    eachPage = 10
+}) => {
 
     const result = {
         curPage: ~~curPage,
@@ -135,15 +168,17 @@ module.exports.pricePai = async ({ curPage = 0, eachPage = 10 }) => {
     const serviceModel = mongoose.model("services")
     result.total = await serviceModel.count()
     result.rows = await
-        serviceModel
-            .find()
-            .populate({
-                path: 'serviceImg',
-            })
-            .sort({ servicePrice: 1 })
-            .skip((result.curPage - 1) * result.eachPage)
-            .limit(result.eachPage)
-            .exec()
+    serviceModel
+        .find()
+        .populate({
+            path: 'serviceImg',
+        })
+        .sort({
+            servicePrice: 1
+        })
+        .skip((result.curPage - 1) * result.eachPage)
+        .limit(result.eachPage)
+        .exec()
 
     return result;
 }

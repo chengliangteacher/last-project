@@ -21,5 +21,5 @@ module.exports.addMembersImg = async img => {
   const Img=await mongoose
     .model("imgs")
     .create(img)
-    return Img.url
+    return  {url:Img.url,_id:Img._id}
 }

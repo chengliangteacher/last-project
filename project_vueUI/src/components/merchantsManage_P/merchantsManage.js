@@ -26,7 +26,7 @@ export default {
         }
     },
     actions: {
-        async initshopdata(context,usersId=localStorage.usersId) {
+        async initshopdata(context,type) {
             let data = await fetch("/shops/getshops", {
                 method: "post",
                 headers: {
@@ -35,9 +35,10 @@ export default {
                 body: JSON.stringify({
                     curPage: context.state.data.curPage,
                     count: context.state.data.count,
-                    usersId,
+                    usersId:localStorage.usersId,
+                    type,
                 })
-            }).then(res => res.json());
+            }).then(res =>res.json());
             context.commit('initshops', data)
         },
 
